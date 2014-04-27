@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=KernelUP
-Name[pl]=kernelup-init
+Name[pl]=KernelUP
 Comment=Automatic Ubuntu kernel updater
 Comment[pl]=Automatyczny aktualizator jądra Ubuntu
 Categories=Application
