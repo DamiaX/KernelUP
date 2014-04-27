@@ -15,7 +15,7 @@ kernelup_en_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernel
 kernelup_up="https://raw.githubusercontent.com/DamiaX/kernelup/master/up.sh"
 remove_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/remove.sh";
 desktop_url='https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.desktop';
-icon_url='https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.png';
+icon_url='https://www.dropbox.com/s/kuzn0gjfql9zhux/kernelup.png';
 init_url='https://github.com/DamiaX/kernelup/raw/master/kernelup-init';
 icon_name='kernelup.png';
 init_name='kernelup-init';
@@ -324,12 +324,12 @@ print_text 32 "$install_kernel_version $latest_kernel_available $for_architectur
 
 for LINK in $(cat $x86); do
 wget -q "$LINK" -O kernel$NR.deb
-NR0=$[NR0 + 1]
+NR=$[NR + 1]
 done;
 
-for LINK1 in $(cat $xall); do
-wget -q "$LINK1" -O kernel$NR.deb
-NR1=$[NR1 + 1]
+for LINK in $(cat $xall); do
+wget -q "$LINK" -O kernel$NR.deb
+NR=$[NR + 1]
 done;
 
 mv *.deb $kat
@@ -363,12 +363,12 @@ print_text 32 "$install_kernel_version $latest_kernel_available $for_architectur
 
 for LINK in $(cat $x64); do
 wget -q "$LINK" -O kernel$NR.deb
-NR3=$[NR3 + 1]
+NR=$[NR + 1]
 done;
 
-for LINK2 in $(cat $xall); do
-wget -q "$LINK2" -O kernel$NR.deb
-NR2=$[NR2 + 1]
+for LINK in $(cat $xall); do
+wget -q "$LINK" -O kernel$NR.deb
+NR=$[NR + 1]
 done;
 
 mv *.deb $kat
