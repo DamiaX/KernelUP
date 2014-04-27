@@ -6,8 +6,11 @@ Functions:
 **[*] Autostart.**
 
 **[*] Automatically checking for kernel version.**
+
 **[*] Notifications about new kernel version.**
+
 **[*] Automatic updates KernelUP.**
+
 **[*] The translations (Polish and English).**
 
 Installation:
