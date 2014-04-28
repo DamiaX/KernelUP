@@ -1,0 +1,37 @@
+#Copyright © 2014 Damian Majchrzak (DamiaX)
+app_name='KernelUP'
+app_name_male='kernelup'
+app_name_styl="\E[33;1m[$app_name $version]\033[0m"
+root_fail='Root permissions are required.'
+dist_fail='Unsupported distribution.'
+check_kernel='Checking installed kernel version...'
+kernel_update='Your kernel is up to date!'
+found="Found a new version of the kernel! \n To update your kernel, run a terminal and issue the command: \n sudo $app_name_male"
+you_kernel='Your kernel version:'
+new_version_kernel='The new version of the kernel:'
+install_new_kernel='Upgrade? [Y/N]'
+install_kernel_version='Installing the kernel version:'
+for_architecture='for architecture'
+instalation_close='Installation completed.'
+unsup_arch='UNSUPPORTED ARCHITECTURE'
+copy_file='Install KernelUP? [Y/N]'
+copy_ok='Installation completed!'
+run='Starting the program:'
+author='Author program:'
+name='Damian Majchrzak (DamiaX).'
+name_author="\E[33;1m$author\033[0m $name"
+new_version='Checking the version KernelUP...'
+download_new='Download a newer version of KernelUP...'
+copy_wrong='Copying files failed...'
+instalation_error='Updating the kernel failed...'
+answer_remove="Are you sure you want to delete the application $app_name from your computer? [Y/N]"
+kernelup_remove="Remove Application $app_name from your computer."
+#parameters
+help='View the content of help.'
+ver_info='Display the version of the program.'
+update_info='Check the available updates.'
+author_info='Display information about the author of the program.'
+version_info='Version of the program:'
+error_unknown_option_text="$app_name_styl: Unknown option '$1'\nFollow '$app_name_male --help'  for more information."
+copy_info='Install KernelUP'
+kernel_search='Check for a new version of the kernel.'
