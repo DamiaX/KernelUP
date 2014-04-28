@@ -1,24 +1,26 @@
 KernelUP
 ========
 
-Functions:
+Features:
 ==========
-**[*] Autostart.**
 
-**[*] Automatically checking for kernel version.**
-
-**[*] Notifications about new kernel version.**
-
-**[*] Automatic updates KernelUP.**
-
-**[*] The translations (Polish and English).**
+* Autostart.
+* Automatically checking for kernel version.
+* Notifications about new kernel version.
+* Automatic updates KernelUP.
+* The translations (Polish and English).
 
 Installation:
 =============
-Run in Terminal:
-----------------
+Execute this command from terminal: (one liner):
+-------
 
      sudo rm -rf /usr/local/sbin/kernelup*;  wget -q --no-check-certificate https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup; chmod +x kernelup; sudo ./kernelup
+     
+or
+
+* Download [this](https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh) file -- `wget https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup.sh`, give permissions to run -- `chmod +x kernelup.sh` and run as root this file on terminal -- `sudo kernelup.sh`
+
      
 Uninstall:
 ==========
