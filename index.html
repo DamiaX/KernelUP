@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+
+    <title>Kernelup by DamiaX</title>
+  </head>
+
+  <body>
+
+    <header>
+      <div class="container">
+        <h1>Kernelup</h1>
+        <h2>Automatic Ubuntu kernel updater</h2>
+
+        <section id="downloads">
+          <a href="https://github.com/DamiaX/kernelup/zipball/master" class="btn">Download as .zip</a>
+          <a href="https://github.com/DamiaX/kernelup/tarball/master" class="btn">Download as .tar.gz</a>
+          <a href="https://github.com/DamiaX/kernelup" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
+        </section>
+      </div>
+    </header>
+
+    <div class="container">
+      <section id="main_content">
+        <h1>
+<a name="kernelup" class="anchor" href="#kernelup"><span class="octicon octicon-link"></span></a>KernelUP</h1>
+
+<p><strong>KernelUP</strong> is a program to automatically update the kernel.</p>
+
+<h1>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features:</h1>
+
+<ul>
+<li>Autostart.</li>
+<li>Automatically checking for kernel version.</li>
+<li>Notifications about new kernel version.</li>
+<li>Automatic updates KernelUP.</li>
+<li>The translations (Polish and English).</li>
+</ul><h1>
+<a name="installation-kernelup" class="anchor" href="#installation-kernelup"><span class="octicon octicon-link"></span></a>Installation KernelUP:</h1>
+
+<p>Execute this command from terminal(one liner):</p>
+
+<pre><code>  sudo rm -rf /usr/local/sbin/kernelup*;  wget -q --no-check-certificate https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup; chmod +x kernelup; sudo ./kernelup
+</code></pre>
+
+<p>Or:</p>
+
+<ul>
+<li>Download <a href="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh">this</a> file -- <code>wget https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup.sh</code>, give permissions to run -- <code>chmod +x kernelup.sh</code> and run as root this file on terminal -- <code>sudo kernelup.sh</code>
+</li>
+</ul><h1>
+<a name="uninstall-kernelup" class="anchor" href="#uninstall-kernelup"><span class="octicon octicon-link"></span></a>Uninstall KernelUP:</h1>
+
+<p>Execute this command from terminal(one liner):</p>
+
+<pre><code>sudo rm -rf /tmp/kernelup*; sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png; sudo rm -rf ~/.config/autostart/kernelup-init.desktop; sudo rm -rf /usr/local/sbin/kernelup*; sudo rm -rf /usr/share/applications/kernelup-init.desktop;
+</code></pre>
+
+<p>or:</p>
+
+<p>Execute this command from terminal:</p>
+
+<pre><code> sudo kernelup -r
+</code></pre>
+
+<h1>
+<a name="author-" class="anchor" href="#author-"><span class="octicon octicon-link"></span></a>Author: </h1>
+
+<p><strong>Damian Majchrzak</strong> <a href="https://www.facebook.com/DamiaX">DamiaX</a><strong>.</strong></p>
+      </section>
+    </div>
+
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-42244616-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
