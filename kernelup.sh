@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.5.6";
+version="0.3.5.7";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
