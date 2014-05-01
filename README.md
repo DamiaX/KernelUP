@@ -1,6 +1,6 @@
 KernelUP
 ========
-**KernelUP** is a program to automatically update the kernel for ** *buntu** and **Linux Mint**.
+**KernelUP** is a program to automatically update the kernel for **Ubuntu** and **Linux Mint**.
 
 Features:
 ==========
