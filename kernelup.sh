@@ -118,7 +118,7 @@ show_text()
 
 check_security()
 {
-if [ "$(lsb_release -si)" != "Ubuntu" ]; then
+if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint"  ]] ; then
    show_text 31 "---[$dist_fail]---" 1>&2
    exit 1
 fi
