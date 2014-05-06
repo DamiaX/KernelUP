@@ -36,5 +36,3 @@ Execute this command from terminal:
 Author: 
 =======
 **Damian Majchrzak** [DamiaX](https://www.facebook.com/DamiaX)**.**
-
-**Project site:** [DamiaX.GitHub.io/KernelUP](http://damiax.github.io/KernelUP/)**.**
