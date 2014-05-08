@@ -26,6 +26,7 @@ copy_wrong='Copying files failed...'
 instalation_error='Updating the kernel failed...'
 answer_remove="Are you sure you want to delete the application $app_name from your computer? [Y/N]"
 kernelup_remove="Remove Application $app_name from your computer."
+remove_old='Do you remove the installed older versions of the kernel in order to free up disk space? [Y/N]'
 #parameters
 help='View the content of help.'
 ver_info='Display the version of the program.'
@@ -35,3 +36,4 @@ version_info='Version of the program:'
 error_unknown_option_text="$app_name_styl: Unknown option '$1'\nFollow '$app_name_male --help'  for more information."
 copy_info='Install KernelUP'
 kernel_search='Check for a new version of the kernel.'
+delete_old_kernel='Delete old versions of the kernel in order to free up disk space.'
