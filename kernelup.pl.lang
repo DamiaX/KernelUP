@@ -26,6 +26,7 @@ copy_wrong='Kopiowanie plików nie powiodło się...'
 instalation_error='Aktualizacja kernela nie powiodła się...'
 answer_remove="Czy na pewno chcesz skasować aplikację $app_name ze swojego komputera? [T/N]"
 kernelup_remove="Usuń aplikację $app_name ze swojego komputera."
+ask_remove_old="Czy usunąć zainstalowane starsze wersje jądra w celu zwolnienia miejsca na dysku? [T/N]"
 #parameters
 help='Wyświetl treść pomocy.'
 ver_info='Wyświetl wersję programu.'
@@ -35,3 +36,4 @@ version_info='Wersja programu:'
 error_unknown_option_text="$app_name_styl: Nieznana opcja '$1'\nWykonaj '$app_name_male --help'  dla uzyskania informacji."
 copy_info='Zainstaluj program KernelUP.'
 kernel_search='Sprawdź czy nie pojawiła się nowa wersja jądra.'
+delete_old_kernel='Usuń stare wersje jądra w celu zwolnienia miejsca na dysku.'
