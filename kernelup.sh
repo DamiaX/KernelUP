@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.5.7";
+version="0.3.5.8";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -21,6 +21,7 @@ icon_name='kernelup.png';
 init_name='kernelup-init';
 desktop_name='kernelup-init.desktop';
 remove_name='remove.sh';
+script_kernel_remove_name='kernel_remove.sh';
 kernelup_run_name='kernelup-run';
 temp=".kernel.temp";
 temp1=".kernel1.temp";
@@ -126,6 +127,51 @@ fi
 if [ "$(id -u)" != "0" ]; then
 show_text 31 "$root_fail" 1>&2
 exit 1
+fi
+}
+
+remove_old_kernel()
+{
+show_text 31 "$ask_remove";
+read answer;
+
+if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
+
+uname -r | awk '{
+print substr($0, 0, index($0, "-generic")) > "kernel.info";
+}'
+
+if [ -f $script_kernel_remove_name ];
+then
+	rm $script_kernel_remove_name;
+fi
+
+dpkg -l | grep linux-headers-* |awk 'BEGIN{
+	if (getline < "kernel.info" > 0){
+		ver = $0;
+	} else {
+		exit;
+	}
+}{
+	if ((index($2, ver) == 0) && ("linux-headers-generic" != $2)){
+		print "sudo apt-get purge -y "$2 >> "kernel_remove.sh";
+              
+	}
+}'
+
+if [ -f $script_kernel_remove_name ];
+then
+chmod +x $script_kernel_remove_name;
+./$script_kernel_remove_name;
+apt-get autoremove -y;
+apt-get autoclean -y;
+rm -rf $script_kernel_remove_name;
+rm -rf 'kernel.info';
+else
+rm -rf $script_kernel_remove_name;
+rm -rf 'kernel.info';
+exit;
+fi
 fi
 }
 
@@ -341,6 +387,7 @@ dpkg -i *.deb
 if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
+remove_old_kernel;
 else
 print_text 31 "$instalation_error"
 fi
@@ -380,6 +427,7 @@ dpkg -i *.deb
 if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
+remove_old_kernel;
 else
 print_text 31 "$instalation_error"
 fi
@@ -408,6 +456,7 @@ case "$1" in
    echo "-u, --update: $update_info";
    echo "-k, --kernel_update: $kernel_search";
    echo "-r, --remove: $kernelup_remove";  
+   echo "-R, --rkernel: $delete_old_kernel";
    echo "-c, --copy: $copy_info";
    echo "-a, --author: $author_info"; 
 exit ;;
@@ -427,6 +476,10 @@ exit;;
 "--remove"|"-r")
    check_security;
    remove_app;
+exit;;
+"--rkernel"|"-R")
+   check_security;
+   remove_old_kernel;
 exit;;
  "--copy"|"-c")
    check_security;
