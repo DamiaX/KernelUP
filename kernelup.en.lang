@@ -26,7 +26,7 @@ copy_wrong='Copying files failed...'
 instalation_error='Updating the kernel failed...'
 answer_remove="Are you sure you want to delete the application $app_name from your computer? [Y/N]"
 kernelup_remove="Remove Application $app_name from your computer."
-remove_old='Do you remove the installed older versions of the kernel in order to free up disk space? [Y/N]'
+ask_remove='Do you remove the installed older versions of the kernel in order to free up disk space? [Y/N]'
 #parameters
 help='View the content of help.'
 ver_info='Display the version of the program.'
