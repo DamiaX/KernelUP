@@ -26,7 +26,7 @@ copy_wrong='Kopiowanie plików nie powiodło się...'
 instalation_error='Aktualizacja kernela nie powiodła się...'
 answer_remove="Czy na pewno chcesz skasować aplikację $app_name ze swojego komputera? [T/N]"
 kernelup_remove="Usuń aplikację $app_name ze swojego komputera."
-ask_remove_old="Czy usunąć zainstalowane starsze wersje jądra w celu zwolnienia miejsca na dysku? [T/N]"
+ask_remove='Czy usunąć zainstalowane starsze wersje jądra w celu zwolnienia miejsca na dysku? [T/N]'
 #parameters
 help='Wyświetl treść pomocy.'
 ver_info='Wyświetl wersję programu.'
