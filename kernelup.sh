@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.5.8";
+version="0.3.5.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -154,6 +154,19 @@ dpkg -l | grep linux-headers-* |awk 'BEGIN{
 	}
 }{
 	if ((index($2, ver) == 0) && ("linux-headers-generic" != $2)){
+		print "sudo apt-get purge -y "$2 >> "kernel_remove.sh";
+              
+	}
+}'
+
+dpkg -l | grep linux-image-* |awk 'BEGIN{
+	if (getline < "kernel.info" > 0){
+		ver = $0;
+	} else {
+		exit;
+	}
+}{
+	if ((index($2, ver) == 0) && ("linux-image-generic" != $2)){
 		print "sudo apt-get purge -y "$2 >> "kernel_remove.sh";
               
 	}
