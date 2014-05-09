@@ -10,6 +10,7 @@ Features:
 * Notifications about new kernel version.
 * Automatic updates KernelUP.
 * The translations (Polish and English).
+* Removing older versions of the kernel.
 
 Installation KernelUP:
 =============
