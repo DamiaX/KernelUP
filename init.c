@@ -6,11 +6,16 @@ int i;
 
 int main (int argc, char *argv[])
 {
-system("kernelup -k -n");
+if ( system("kernelup -k -n") != 0 ) 
+{
+return 1;
+}
 for( i = 1; i <= 2; )
 {
 sleep (3600);
-system("kernelup -k -n");
+if ( system("kernelup -k -n") != 0 ) 
+{
+return 1;
 }
 	return 0;
 }
