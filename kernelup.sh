@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.5.9";
+version="0.3.6";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -134,57 +134,9 @@ remove_old_kernel()
 {
 show_text 31 "$ask_remove";
 read answer;
-
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-
-uname -r | awk '{
-print substr($0, 0, index($0, "-generic")) > "kernel.info";
-}'
-
-if [ -f $script_kernel_remove_name ];
-then
-	rm $script_kernel_remove_name;
-fi
-
-dpkg -l | grep linux-headers-* |awk 'BEGIN{
-	if (getline < "kernel.info" > 0){
-		ver = $0;
-	} else {
-		exit;
-	}
-}{
-	if ((index($2, ver) == 0) && ("linux-headers-generic" != $2)){
-		print "sudo apt-get purge -y "$2 >> "kernel_remove.sh";
-              
-	}
-}'
-
-dpkg -l | grep linux-image-* |awk 'BEGIN{
-	if (getline < "kernel.info" > 0){
-		ver = $0;
-	} else {
-		exit;
-	}
-}{
-	if ((index($2, ver) == 0) && ("linux-image-generic" != $2)){
-		print "sudo apt-get purge -y "$2 >> "kernel_remove.sh";
-              
-	}
-}'
-
-if [ -f $script_kernel_remove_name ];
-then
-chmod +x $script_kernel_remove_name;
-./$script_kernel_remove_name;
-apt-get autoremove -y;
-apt-get autoclean -y;
-rm -rf $script_kernel_remove_name;
-rm -rf 'kernel.info';
-else
-rm -rf $script_kernel_remove_name;
-rm -rf 'kernel.info';
-exit;
-fi
+apt-get remove -y --purge $(dpkg -l 'linux-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
+apt-get -y autoremove;
 fi
 }
 
