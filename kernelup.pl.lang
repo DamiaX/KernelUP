@@ -28,6 +28,7 @@ answer_remove="Czy na pewno chcesz skasować aplikację $app_name ze swojego kom
 kernelup_remove="Usuń aplikację $app_name ze swojego komputera."
 ask_remove='Czy usunąć zainstalowane starsze wersje jądra w celu zwolnienia miejsca na dysku? [T/n]'
 ask_reboot='Uruchomić ponownie komputer w celu dokończenia aktualizacji jądra? [T/n]'
+no_connect='Brak połączenia z Internetem. \nPrzerwano.'
 #parameters
 help='Wyświetl treść pomocy.'
 ver_info='Wyświetl wersję programu.'
