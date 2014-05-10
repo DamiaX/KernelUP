@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.6.5";
+version="0.3.6.5.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -45,9 +45,6 @@ autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
 log_dir="/var/log";
 log_name="kernelup.log";
-check_server1=$(ping -c 1 google.com|grep "100% packet loss");
-check_server2=$(ping -c 1 facebook.com|grep "100% packet loss");
-check_server3=$(ping -c 1 twitter.com|grep "100% packet loss");
 
 data_clear()
 {
@@ -144,9 +141,11 @@ fi
 
 test_connect()
 {
-if [[ -n "$check_server1" && -n "$check_server2" && -n "$check_server3" ]]
+ping -q -c1 google.com >$temp
+if [ "$?" -eq "2" ];
 then
 show_text 31 "$no_connect";
+rm -rf $temp;
 exit 1;
 fi
 }
