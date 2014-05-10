@@ -146,7 +146,7 @@ update-grub;
 fi
 }
 
-reboot()
+procedure_reboot()
 {
 show_text 31 "$ask_reboot";
 read answer;
@@ -375,7 +375,7 @@ if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
 touch $log_dir/$log_name;
-reboot;
+procedure_reboot;
 else
 print_text 31 "$instalation_error"
 fi
@@ -416,7 +416,7 @@ if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
 touch $log_dir/$log_name;
-reboot;
+procedure_reboot;
 else
 print_text 31 "$instalation_error"
 fi
