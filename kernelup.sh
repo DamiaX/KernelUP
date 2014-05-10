@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.6.2.1";
+version="0.3.6.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -16,7 +16,7 @@ kernelup_up="https://raw.githubusercontent.com/DamiaX/kernelup/master/up.sh"
 remove_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/remove.sh";
 desktop_url='https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.desktop';
 icon_url='https://www.dropbox.com/s/kuzn0gjfql9zhux/kernelup.png';
-init_url='https://github.com/DamiaX/kernelup/raw/master/kernelup-init';
+init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup-init';
 icon_name='kernelup.png';
 init_name='kernelup-init';
 desktop_name='kernelup-init.desktop';
