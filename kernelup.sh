@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.6.3";
+version="0.3.6.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -60,6 +60,12 @@ rm -rf $xall
 rm -rf $kat
 }
 
+default_answer()
+{
+if [ -z $answer ]; then
+answer='y';
+fi
+}
 langpl()
 {
 if [ -e $app_dir/$app ] ; then
@@ -136,6 +142,7 @@ remove_old_kernel()
 {
 show_text 31 "$ask_remove";
 read answer;
+default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 apt-get remove -y --purge $(dpkg -l 'linux-image-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
 apt-get remove -y --purge $(dpkg -l 'linux-headers-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
@@ -150,6 +157,7 @@ procedure_reboot()
 {
 show_text 31 "$ask_reboot";
 read answer;
+default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 reboot;
 fi
@@ -166,6 +174,7 @@ remove_app()
 {
 show_text 31 "$answer_remove";
 read answer;
+default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 wget -q $remove_url -O $remove_name;
 chmod +x $remove_name;
@@ -199,7 +208,8 @@ if [ -e $app_dir/$app_name_male ] ; then
 echo -e -n '';
 else
 show_text 31 "=> $copy_file";
-read answer
+read answer;
+default_answer;
 
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 
@@ -348,7 +358,8 @@ if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
 
 print_text 31 "$install_new_kernel"
 
-read answer
+read answer;
+default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
 data_clear
@@ -389,7 +400,8 @@ fi
 elif [ $arch2 = "x86_64" ]; then
 print_text 31 "$install_new_kernel"
 
-read answer
+read answer;
+default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
 data_clear
