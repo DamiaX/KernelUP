@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.6.1";
+version="0.3.6.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -43,6 +43,8 @@ actual_dir="$(pwd)";
 temp_dir="$HOME/temp_dir";
 autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
+log_dir="/var/log";
+log_name="kernelup.log";
 
 data_clear()
 {
@@ -138,9 +140,28 @@ if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; t
 apt-get remove -y --purge $(dpkg -l 'linux-image-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
 apt-get remove -y --purge $(dpkg -l 'linux-headers-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
 apt-get -y autoremove;
+apt-get -y autoclean;
+apt-get -y clean;
+update-grub;
 fi
 }
 
+reboot()
+{
+show_text 31 "$ask_reboot";
+read answer;
+if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
+reboot;
+fi
+}
+
+remove_old_kernel_init()
+{
+if [ -e $log_dir/$log_name ] ; then
+remove_old_kernel;
+rm -rf $log_dir/$log_name;
+fi
+}
 remove_app()
 {
 show_text 31 "$answer_remove";
@@ -353,7 +374,8 @@ dpkg -i *.deb
 if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
-remove_old_kernel;
+touch $log_dir/$log_name;
+reboot;
 else
 print_text 31 "$instalation_error"
 fi
@@ -393,7 +415,8 @@ dpkg -i *.deb
 if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
-remove_old_kernel;
+touch $log_dir/$log_name;
+reboot;
 else
 print_text 31 "$instalation_error"
 fi
@@ -466,6 +489,7 @@ done
 check_security;
 echo -e "$app_name_styl"
 update;
+remove_old_kernel_init;
 check_kernel_update;
 copy_file;
 data_clear;
