@@ -27,6 +27,7 @@ instalation_error='Aktualizacja kernela nie powiodła się...'
 answer_remove="Czy na pewno chcesz skasować aplikację $app_name ze swojego komputera? [t/n]"
 kernelup_remove="Usuń aplikację $app_name ze swojego komputera."
 ask_remove='Czy usunąć zainstalowane starsze wersje jądra w celu zwolnienia miejsca na dysku? [t/n]'
+ask_reboot='Uruchomić ponownie komputer w celu dokończenia aktualizacji jądra? [t/n]'
 #parameters
 help='Wyświetl treść pomocy.'
 ver_info='Wyświetl wersję programu.'
