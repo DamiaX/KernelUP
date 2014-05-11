@@ -5,20 +5,13 @@
 
 url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh";
 temp=".temp";
-temp1=".temp1";
 name="kernelup";
 
 ps -e | grep 'kernelup-init' >$temp
-ps -e | grep 'kernelup-run' >$temp1
 
 if [ -s $temp ]
  then
 killall kernelup-init;
-fi
-
-if [ -s $temp1 ]
- then
-killall kernelup-run;
 fi
 
 sudo rm -rf /tmp/kernelup*; 
@@ -29,7 +22,6 @@ sudo rm -rf /usr/share/applications/kernelup-init.desktop;
 sudo rm -rf kernelup*;
 
 rm -rf $temp;
-rm -rf $temp1;
 
 wget -q $url -O $name;
 chmod +x $name;
