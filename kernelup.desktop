@@ -22,5 +22,5 @@ TargetEnvironment=Unity
 [CloseApp Shortcut Group]
 Name=Close KernelUP
 Name[pl]=Zakończ działanie programu KernelUP
-Exec=killall kernelup-init; killall kernelup-run;
+Exec=killall kernelup-init;
 TargetEnvironment=Unity
