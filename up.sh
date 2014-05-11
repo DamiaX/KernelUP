@@ -11,6 +11,7 @@ ps -e | grep 'kernelup-init' >$temp
 
 if [ -s $temp ]
  then
+killall 'sleep';
 killall kernelup-init;
 fi
 
