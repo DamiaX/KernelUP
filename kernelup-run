@@ -8,7 +8,8 @@ ps -e | grep 'kernelup-init' >$temp
 
 if [ -s $temp ]
  then
-killall kernelup-init;
+killall kernelup-init
+killall 'sleep';
 rm -rf $temp;
 else
 rm -rf $temp;
