@@ -5,7 +5,7 @@
 
 clear
 
-version="0.3.6.5.1";
+version="0.3.6.5.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -130,12 +130,14 @@ check_security()
 {
 if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint"  ]] ; then
    show_text 31 "---[$dist_fail]---" 1>&2
+   rm -rf $temp_dir;
    exit 1
 fi
 
 if [ "$(id -u)" != "0" ]; then
-show_text 31 "$root_fail" 1>&2
-exit 1
+   show_text 31 "$root_fail" 1>&2
+   rm -rf $temp_dir;
+   exit 1
 fi
 }
 
