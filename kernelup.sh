@@ -284,7 +284,7 @@ sed -i 's@,@@g' $temp2
 ver7=`cat "$temp"`
 ver9=`cat "$temp2"`
 
-if [ $ver9 -le $ver7 ]
+if [ $ver7 -eq $ver9 ]
     then
 print_text 35 "=> $new_version"
 else
