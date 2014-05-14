@@ -5,7 +5,7 @@
 
 clear
 
-version="1.2.1.1.1";
+version="1.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -284,7 +284,7 @@ sed -i 's@,@@g' $temp2
 ver7=`cat "$temp"`
 ver9=`cat "$temp2"`
 
-if [ $ver7 -le $ver9 ]
+if [ $ver9 -le $ver7 ]
     then
 print_text 35 "=> $new_version"
 else
