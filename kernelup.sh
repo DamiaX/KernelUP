@@ -5,7 +5,7 @@
 
 clear
 
-version="1.0";
+version="1.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -135,7 +135,7 @@ if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint"  ]
 fi
 
 if [ "$(id -u)" != "0" ]; then
-   show_text 31 "$root_fail" 1>&2
+show_text 31 "$root_fail" 1>&2
    rm -rf $temp_dir;
    exit 1
 fi
@@ -316,7 +316,7 @@ zenity --info --title="$app_name" --text="$found";
 
 check_kernel_update()
 {
-mkdir $temp_dir;
+mkdir -p $temp_dir;
 cd $temp_dir;
 
 print_text 33 "=> $check_kernel";
