@@ -5,7 +5,7 @@
 
 clear
 
-version="1.1";
+version="1.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -272,7 +272,7 @@ fi
 
 update()
 {
-wget -q $version_url -O $url
+wget --no-cache --no-dns-cache -q $version_url -O $url
 echo "$version" > $temp3
 
 cat $url|tr . , >$temp
@@ -517,8 +517,8 @@ check_security;
 echo -e "$app_name_styl"
 test_connect;
 update;
+copy_file;
 remove_old_kernel_init;
 check_kernel_update;
-copy_file;
 data_clear;
 echo -e "$name_author";
