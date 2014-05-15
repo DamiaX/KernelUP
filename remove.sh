@@ -15,7 +15,7 @@ fi
 
 sudo rm -rf /tmp/kernelup*; 
 sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png; 
-sudo rm -rf ~/.config/autostart/kernelup-init.desktop; 
+sudo rm -rf ~/.config/autostart/kernelup*;
 sudo rm -rf /usr/local/sbin/kernelup*; 
 sudo rm -rf /usr/share/applications/kernelup*;
 sudo rm -rf /var/log/kernelup.log;
