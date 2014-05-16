@@ -5,7 +5,7 @@
 
 clear
 
-version="1.4";
+version="1.5";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -17,6 +17,9 @@ remove_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/remove.sh";
 desktop_url='https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.desktop';
 icon_url='https://www.dropbox.com/s/kuzn0gjfql9zhux/kernelup.png';
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup-init';
+connect_test_url1='google.com';
+connect_test_url2='facebook.com';
+connect_test_url3='kernel.org';
 icon_name='kernelup.png';
 init_name='kernelup-init';
 desktop_name='kernelup-init.desktop';
@@ -143,12 +146,20 @@ fi
 
 test_connect()
 {
-ping -q -c1 google.com >$temp
+ping -q -c1 $connect_test_url1 >$temp
+if [ "$?" -eq "2" ];
+then
+ping -q -c1 $connect_test_url2 >$temp
+if [ "$?" -eq "2" ];
+then
+ping -q -c1 $connect_test_url3 >$temp
 if [ "$?" -eq "2" ];
 then
 show_text 31 "$no_connect";
 rm -rf $temp;
 exit 1;
+fi
+fi
 fi
 }
 
