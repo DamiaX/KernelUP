@@ -5,7 +5,7 @@
 
 clear
 
-version="1.3";
+version="1.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -482,11 +482,13 @@ exit ;;
 exit ;;
    "--update"|"-u")
    check_security;
+   test_connect;
    echo -e "$app_name_styl"
    update; 
 exit;;
    "--kernel_update"|"-k")
    echo -e "$app_name_styl"
+   test_connect;
    check_kernel_update;
 exit;;
 "--remove"|"-r")
