@@ -206,6 +206,7 @@ if [ -e $log_dir/$log_name_reboot ] ; then
 procedure_reboot;
 fi
 }
+
 remove_app()
 {
 show_text 31 "$answer_remove";
