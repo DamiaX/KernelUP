@@ -5,7 +5,7 @@
 
 clear
 
-version="1.5";
+version="1.6";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -48,6 +48,7 @@ autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
 log_dir="/var/log";
 log_name="kernelup.log";
+log_name_reboot="kernelup_reboot.log";
 
 data_clear()
 {
@@ -74,7 +75,7 @@ langpl()
 {
 if [ -e $app_dir/$app ] ; then
 if [ -e $app_dir/$pl ] ; then
-clear
+echo -e -n '';
 else
 wget -q $kernelup_pl_url -O  $app_dir/$pl
 fi
@@ -87,7 +88,7 @@ langen()
 {
 if [ -e $app_dir/$app ] ; then
 if [ -e $app_dir/$en ] ; then
-clear
+echo -e -n '';
 else
 wget -q $kernelup_en_url -O  $app_dir/$en
 fi
@@ -180,11 +181,14 @@ fi
 
 procedure_reboot()
 {
+rm -rf $log_dir/$log_name_reboot;
 show_text 31 "$ask_reboot";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 reboot;
+else
+touch $log_dir/$log_name_reboot;
 fi
 }
 
@@ -196,6 +200,12 @@ rm -rf $log_dir/$log_name;
 fi
 }
 
+reboot_init()
+{
+if [ -e $log_dir/$log_name_reboot ] ; then
+procedure_reboot;
+fi
+}
 remove_app()
 {
 show_text 31 "$answer_remove";
@@ -317,11 +327,22 @@ fi
 notyfication()
 {
     if [ -f "/usr/bin/notify-send" ]; then
-notify-send "$app_name" "$found" -i $icon_path/$icon_name;
+notify-send "$app_name" "$found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1" -i $icon_path/$icon_name;
     elif [ -f "/usr/bin/kdialog" ];then
-kdialog --title="$app_name" --msgbox="$found";
+kdialog --title="$app_name" --msgbox="$found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1";
     elif [ -f "/usr/bin/zenity" ];then
-zenity --info --title="$app_name" --text="$found";
+zenity --info --title="$app_name" --text="$found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1";
+    fi
+}
+
+reboot_notyfication()
+{
+ if [ -f "/usr/bin/notify-send" ]; then
+notify-send "$app_name" "$reboot_now_com" -i $icon_path/$icon_name;
+    elif [ -f "/usr/bin/kdialog" ];then
+kdialog --title="$app_name" --msgbox="$reboot_now_com";
+    elif [ -f "/usr/bin/zenity" ];then
+zenity --info --title="$app_name" --text="$reboot_now_com";
     fi
 }
 
@@ -373,7 +394,12 @@ awk -vRS="</program2>" '{gsub(/.*<program2.*>/,"");print}' $temp4 > $x86;
 sed -i "s@<program2>@<program3>@g" $temp4;
 awk -vRS="</program3>" '{gsub(/.*<program3.*>/,"");print}' $temp4 > $xall;
 
+if [ -e $log_dir/$log_name_reboot ] ; then
+reboot_notyfication;
+else
 notyfication;
+fi
+
 print_text 33 "=> $you_kernel $latest_kernel_installed"
 print_text 35 "=> $new_version_kernel $latest_kernel_available"
 check_security;
@@ -515,6 +541,10 @@ exit;;
    rm -rf "$app_dir/$app_name_male*";
    copy_file -y; 
 exit;;
+ "--systemreboot"|"-sr")
+    check_security;
+    procedure_reboot;
+exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
    echo -e "$name_author";
@@ -532,6 +562,7 @@ test_connect;
 update;
 copy_file;
 remove_old_kernel_init;
+reboot_init;
 check_kernel_update;
 data_clear;
 echo -e "$name_author";
