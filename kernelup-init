@@ -3,9 +3,10 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-kernelup -k -n;
+rm -rf $HOME/.KernelUP_data;
+kernelup -k;
 
 for (( i=1; $i <= 2; )) ; do
 sleep 3600;
-kernelup -k -n;
+kernelup -k;
 done;
