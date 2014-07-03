@@ -5,7 +5,7 @@
 
 clear
 
-version="1.6";
+version="1.6.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -46,7 +46,7 @@ actual_dir="$(pwd)";
 temp_dir="$HOME/temp_dir";
 autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
-log_dir="/var/log";
+log_dir="$HOME/.KernelUP_data";
 log_name="kernelup.log";
 log_name_reboot="kernelup_reboot.log";
 
@@ -67,10 +67,18 @@ rm -rf $kat
 default_answer()
 {
 if [ -z $answer ]; then
-answer='y';
+answer='y';l
 fi
 }
 
+create_app_data()
+{
+if [ -e $log_dir ] ; then
+echo -e -n '';
+else
+mkdir -p $log_dir
+fi
+}
 langpl()
 {
 if [ -e $app_dir/$app ] ; then
@@ -557,6 +565,7 @@ exit;;
     esac
 done
 
+create_app_data;
 check_security;
 echo -e "$app_name_styl"
 test_connect;
