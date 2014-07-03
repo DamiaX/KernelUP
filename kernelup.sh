@@ -3,8 +3,6 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-clear
-
 version="1.6.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
@@ -565,6 +563,7 @@ exit;;
     esac
 done
 
+clear;
 create_app_data;
 check_security;
 echo -e "$app_name_styl"
