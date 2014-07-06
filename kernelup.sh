@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="2.1";
+version="2.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -330,6 +330,10 @@ cp $desktop_name $autostart_dir;
 check_success_copy;
 mv $desktop_name $applications_path;
 check_success_copy;
+create_app_data;
+check_success_copy;
+add_chmod;
+check_success_copy;
 
 if [ $? -eq 0 ]
     then
@@ -606,8 +610,6 @@ exit;;
 done
 
 clear;
-create_app_data;
-add_chmod;
 check_security;
 echo -e "$app_name_styl"
 test_connect;
