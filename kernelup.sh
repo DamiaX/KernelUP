@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="1.7.1";
+version="1.8";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -45,6 +45,8 @@ temp_dir="$HOME/temp_dir";
 autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
 log_dir="$HOME/.KernelUP_data";
+plugins_dir="$log_dir/Plugins";
+plugins_extension="*.kernelup";
 log_name="kernelup.log";
 log_name_reboot="kernelup_reboot.log";
 
@@ -74,9 +76,36 @@ create_app_data()
 if [ -e $log_dir ] ; then
 echo -e -n '';
 else
-mkdir -p $log_dir
+mkdir -p $log_dir;
+fi
+
+if [ -e $plugins_dir ] ; then
+echo -e -n '';
+else
+mkdir -p $plugins_dir;
 fi
 }
+
+load_plugins()
+{
+NR=1
+if [ -e $plugins_dir/$plugins_extension ] ; then
+for plugins in $plugins_dir/$plugins_extension ; do
+grep -h 'function' $plugins_dir/$plugins_extension >$temp
+sed -i 's@function@@g' $temp
+sed -i 's@ @@g' $temp
+ls $plugins_dir/$plugins_extension >$temp2
+plugin_name=`cat "$temp2" | sed -n "$NR p"`
+function_name=`cat "$temp" | sed -n "$NR p"`
+. $plugin_name
+$function_name
+NR=$[NR + 1]
+done
+rm -rf $temp
+rm -rf $temp
+fi
+}
+
 langpl()
 {
 if [ -e $app_dir/$app ] ; then
@@ -572,6 +601,7 @@ update;
 copy_file;
 remove_old_kernel_init;
 reboot_init;
+load_plugins;
 check_kernel_update;
 data_clear;
 echo -e "$name_author";
