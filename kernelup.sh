@@ -3,18 +3,18 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="1.8";
+version="1.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
-kernelup_run_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup-run";
-kernelup_pl_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.pl.lang";
-kernelup_en_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.en.lang";
+kernelup_run_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-run";
+kernelup_pl_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Language/kernelup.pl.lang";
+kernelup_en_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Language/kernelup.en.lang";
 kernelup_up="https://raw.githubusercontent.com/DamiaX/kernelup/master/up.sh"
-remove_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/remove.sh";
-desktop_url='https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.desktop';
-icon_url='https://www.dropbox.com/s/kuzn0gjfql9zhux/kernelup.png';
-init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup-init';
+remove_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/remove.sh";
+desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup.desktop';
+icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png';
+init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
 connect_test_url1='google.com';
 connect_test_url2='facebook.com';
 connect_test_url3='kernel.org';
@@ -77,12 +77,16 @@ if [ -e $log_dir ] ; then
 echo -e -n '';
 else
 mkdir -p $log_dir;
+chmod 777 $log_dir;
+chmod 777 $log_dir/*;
 fi
 
 if [ -e $plugins_dir ] ; then
 echo -e -n '';
 else
 mkdir -p $plugins_dir;
+chmod 777 $plugins_dir;
+chmod 777 $plugins_dir/*;
 fi
 }
 
