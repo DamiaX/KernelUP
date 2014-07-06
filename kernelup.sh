@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="2.0";
+version="2.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -92,12 +92,10 @@ add_chmod()
 {
 if [ -e $log_dir ] ; then
 chmod 777 $log_dir;
-chmod 777 $log_dir/*;
 fi
 
 if [ -e $plugins_dir ] ; then
 chmod 777 $plugins_dir;
-chmod 777 $plugins_dir/*;
 fi
 }	
 
