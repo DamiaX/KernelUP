@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="1.9";
+version="2.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -78,7 +78,6 @@ echo -e -n '';
 else
 mkdir -p $log_dir;
 chmod 777 $log_dir;
-chmod 777 $log_dir/*;
 fi
 
 if [ -e $plugins_dir ] ; then
@@ -86,9 +85,21 @@ echo -e -n '';
 else
 mkdir -p $plugins_dir;
 chmod 777 $plugins_dir;
-chmod 777 $plugins_dir/*;
 fi
 }
+
+add_chmod()
+{
+if [ -e $log_dir ] ; then
+chmod 777 $log_dir;
+chmod 777 $log_dir/*;
+fi
+
+if [ -e $plugins_dir ] ; then
+chmod 777 $plugins_dir;
+chmod 777 $plugins_dir/*;
+fi
+}	
 
 load_plugins()
 {
@@ -598,6 +609,7 @@ done
 
 clear;
 create_app_data;
+add_chmod;
 check_security;
 echo -e "$app_name_styl"
 test_connect;
