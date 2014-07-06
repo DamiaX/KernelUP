@@ -1,0 +1,24 @@
+#!/bin/bash
+
+################################
+#Plugin name: Cleaner          #                     
+#Author: Damian Majchrzak      #
+#Version of plugin: 1.0        #
+#Short description: Automatic  #
+# system cleaner.              #
+################################
+
+
+function system_clean
+{
+rm -rf /var/cache/apt/archives/*
+find .macromedia/ -name "*.sol" | xargs rm -rf
+find /var/log/ -name "*.log.*"  >a
+delete_files=`cat "a"`
+rm -rf $delete_files
+rm -rf a
+rm -rf /tmp/*
+apt-get autoclean -y
+apt-get clean -y
+apt-get autoremove -purge -y
+}
