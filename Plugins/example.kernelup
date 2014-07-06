@@ -1,0 +1,17 @@
+#!/bin/bash
+#Example plugin for KernelUP.
+
+################################
+#Plugin name: Example          #                     
+#Author: Damian Majchrzak      #
+#Version of plugin: 1.0        #
+#Short description: Example -  #
+#Plugin for KernelUP           #
+################################
+
+#Function name (example: initial).
+function initial
+{
+#Function code (example: print_text 31 "Hello KernelUP. This is my first plugin for KernelUP ;)")
+print_text 31 "Hello KernelUP. This is my first plugin for KernelUP ;)"
+}
