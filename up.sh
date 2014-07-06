@@ -26,5 +26,5 @@ rm -rf $temp;
 
 wget -q $url -O $name;
 chmod +x $name;
-./$name;
+./$name -c -y;
 exit;
