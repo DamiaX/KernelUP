@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="2.5";
+version="2.6";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -47,7 +47,7 @@ latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut 
 log_dir="$HOME/.KernelUP_data";
 plugins_dir="$log_dir/Plugins";
 plugins_extension="*.kernelup";
-log_name="kernelup.log";
+log_name="kernelup.klog";
 log_name_reboot="kernelup_reboot.log";
 
 data_clear()
