@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="2.3";
+version="2.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -102,7 +102,9 @@ fi
 load_plugins()
 {
 NR=1
-if [ -e $plugins_dir/$plugins_extension ] ; then
+if [ -f $plugins_dir/ ] ; then
+echo -e -n '';
+else
 for plugins in $plugins_dir/$plugins_extension ; do
 grep -h 'function' $plugins_dir/$plugins_extension >$temp
 sed -i 's@function@@g' $temp
@@ -210,6 +212,27 @@ exit 1;
 fi
 fi
 fi
+}
+
+install_plugins()
+{
+show_text 31 "$install_plugin_answer";
+read adres;
+wget -q --no-cache $adres -O $plugins_dir/$RANDOM.kernelup;
+
+if [ $? -eq 0 ]
+    then
+echo -e -n '';
+else
+show_text 31 "$install_plugin_error";
+fi 
+chmod 777 $plugins_dir/*.kernelup;
+if [ $? -eq 0 ]
+    then
+show_text 32 "$install_plugin_ok";
+else
+show_text 31 "$install_plugin_error";
+fi 
 }
 
 remove_old_kernel()
@@ -565,6 +588,7 @@ case "$1" in
    echo "-R, --rkernel: $delete_old_kernel";
    echo "-c, --copy: $copy_info";
    echo "-a, --author: $author_info"; 
+   echo "-pi, --plugin-installer: $plugin_info"; 
 exit ;;
    "--version"|"-v") 
    echo -e "$app_name_styl"
@@ -577,13 +601,18 @@ exit ;;
    update; 
 exit;;
    "--kernel_update"|"-k")
-   echo -e "$app_name_styl"
+   echo -e "$app_name_styl";
    test_connect;
    check_kernel_update;
 exit;;
 "--remove"|"-r")
    check_security;
+   test_connect;
    remove_app;
+exit;;
+"--plugin-installer"|"-pi")
+   test_connect;
+   install_plugins;
 exit;;
 "--rkernel"|"-R")
    check_security;
@@ -591,6 +620,7 @@ exit;;
 exit;;
  "--copy"|"-c")
    check_security;
+   test_connect;
    rm -rf "$app_dir/$app_name_male*";
    copy_file -y; 
 exit;;
@@ -617,7 +647,7 @@ update;
 copy_file;
 remove_old_kernel_init;
 reboot_init;
-load_plugins;
 check_kernel_update;
 data_clear;
+load_plugins;
 echo -e "$name_author";
