@@ -11,6 +11,8 @@
 
 function system_clean
 {
+apt-get update -y -qq
+apt-get upgrade -y -qq
 find .macromedia/ -name "*.sol" | xargs rm -rf
 find /var/log/ -name "*.log.*"  >a
 delete_files=`cat "a"`
@@ -24,4 +26,3 @@ apt-get autoremove --purge -y -qq
 rm -rf /var/cache/apt/archives
 mkdir -p /var/cache/apt/archives/partial/
 }
-
