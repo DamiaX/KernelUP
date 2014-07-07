@@ -1,83 +1,124 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
-
     <title>KernelUP by DamiaX</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/DamiaX/KernelUP">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/DamiaX/KernelUP/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/DamiaX/KernelUP/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <header>
-      <div class="container">
-        <h1>KernelUP</h1>
-        <h2>Automatic Ubuntu and Linux Mint kernel updater</h2>
+    <div class="wrapper">
 
-        <section id="downloads">
-          <a href="https://github.com/DamiaX/KernelUP/zipball/master" class="btn">Download as .zip</a>
-          <a href="https://github.com/DamiaX/KernelUP/tarball/master" class="btn">Download as .tar.gz</a>
-          <a href="https://github.com/DamiaX/KernelUP" class="btn btn-github"><span class="icon"></span>View on GitHub</a>
-        </section>
-      </div>
-    </header>
+      <section>
+        <div id="title">
+          <h1>KernelUP</h1>
+          <p>Automatic Ubuntu and Linux Mint kernel updater</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/DamiaX">DamiaX</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-    <div class="container">
-      <section id="main_content">
-        <h1>
-<a name="kernelup" class="anchor" href="#kernelup"><span class="octicon octicon-link"></span></a>KernelUP</h1>
+        <p>About:</p><blockquote>
+<strong>KernelUP</strong> is a program to automatically update the kernel for <strong>Ubuntu</strong> and <strong>Linux Mint</strong>.
+</blockquote>
 
-<p><strong>KernelUP</strong> is a program to automatically update the kernel for <strong>Ubuntu</strong> and <strong>Linux Mint</strong>.</p>
+<hr><p>Features:<br></p>
 
-<h1>
-<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Features:</h1>
+<blockquote>
+* Autostart.<br>
+* Automatically checking for kernel version.<br>
+* Notifications about new kernel version.<br>
+* Automatic updates KernelUP.<br>
+* The translations (Polish and English).<br>
+* Removing older versions of the kernel.<br>
+* System Plugin.<br>
+</blockquote>
 
-<ul>
-<li>Autostart.</li>
-<li>Automatically checking for kernel version.</li>
-<li>Notifications about new kernel version.</li>
-<li>Automatic updates KernelUP.</li>
-<li>The translations (Polish and English).</li>
-<li>Removing older versions of the kernel.</li>
-</ul><h1>
-<a name="installation-kernelup" class="anchor" href="#installation-kernelup"><span class="octicon octicon-link"></span></a>Installation KernelUP:</h1>
+<hr><p>GUI Install:<br></p>
 
-<p>Execute this command from terminal(one liner):</p>
+<blockquote>
+Download this: https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh file.<br>
+Give permissions to run.
+Run as root this file on terminal.
+</blockquote>
 
-<pre><code>  sudo rm -rf /usr/local/sbin/kernelup*;  wget -q --no-check-certificate https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup; chmod +x kernelup; sudo ./kernelup
-</code></pre>
+<hr><p>Terminal Install:<br></p>
 
-<p>Or:</p>
+<blockquote>
+Step 1: Download (Method 1/2: Use <code>wget</code> to download a install script and give permissions to run)
+<pre><code>wget https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup; 
+chmod +x kernelup</code></pre>
 
-<ul>
-<li>Download <a href="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh">this</a> file -- <code>wget https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup.sh</code>, give permissions to run -- <code>chmod +x kernelup.sh</code> and run as root this file on terminal -- <code>sudo kernelup.sh</code>
-</li>
-</ul><h1>
-<a name="uninstall-kernelup" class="anchor" href="#uninstall-kernelup"><span class="octicon octicon-link"></span></a>Uninstall KernelUP:</h1>
+Step 1: Download (Method 2/2: Use <code>curl</code> to download a install script and give permissions to run)
+<pre><code>curl https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh &gt; kernelup;
+chmod +x kernelup</code></pre>
 
-<p>Execute this command from terminal(one liner):</p>
+Step 2: Run as root the <code>kernelup</code> script.
+<pre><code>sudo ./kernelup</code></pre>
+</blockquote>
 
-<pre><code>sudo rm -rf /tmp/kernelup*; sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png; sudo rm -rf ~/.config/autostart/kernelup-init.desktop; sudo rm -rf /usr/local/sbin/kernelup*; sudo rm -rf /usr/share/applications/kernelup-init.desktop;
-</code></pre>
+<hr><p>Uninstall KernelUP:<br></p>
 
-<p>or:</p>
+<blockquote>
+Method 1: Manually uninstalling the program files.<br><code>sudo rm -rf /tmp/kernelup*</code> deleting temp files program.<br><code>sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png</code> removing a program icon.<br><code>sudo rm -rf ~/.config/autostart/kernelup-init.desktop</code> removing autostart applications.<br><code>sudo rm -rf /usr/local/sbin/kernelup*</code> removing the application<br><code>sudo rm -rf /usr/share/applications/kernelup-init.desktop</code> delete the '.desktop' file.<br><code>sudo rm -rf $HOME/.KernelUP_data</code> removing configuration files.<br>
+      
+Method 2: Starting automatic uninstaller<br><code>sudo kernelup -r</code><br>
+</blockquote>
 
-<p>Execute this command from terminal:</p>
+<hr><p>Advanced usage examples and notes:</p><blockquote>
+<code>-h</code> or <code>--help</code> view the content of help.<br><code>-v</code> or <code>--version</code> display the version of the program.<br><code>-k</code> or <code>--kernel_update</code> check for a new version of the kernel.<br><code>-u</code> or <code>--update</code> check the available program updates.<br><code>-r</code> or <code>--remove</code> remove application.<br><code>-R</code> or <code>--rkernel</code> delete old versions of the kernel in order to free up disk space.<br><code>-c</code> or <code>--copy</code> install program.<br><code>-a</code> or <code>--author</code> display information about the author of the program.<br><code>-pi</code> or <code>--plugin-installer</code> install additional plugins for the program.<br>
+</blockquote>
 
-<pre><code> sudo kernelup -r
-</code></pre>
+<hr><p>Create and install Plugin for KernelUP<br></p>
 
-<h1>
-<a name="author-" class="anchor" href="#author-"><span class="octicon octicon-link"></span></a>Author: </h1>
+<blockquote>
 
-<p><strong>Damian Majchrzak</strong> <a href="https://www.facebook.com/DamiaX">DamiaX</a><strong>.</strong></p>
+Install Plugin:<br>
+
+* To install the plugin just move it to the directory: "~/.KernelUP_data/Plugins/" -- <pre><code>mv PLUGIN_NAME.kernelup $HOME/.KernelUP_data/Plugins/</code></pre>
+
+Create Plugin:<br>
+* Download a sample: https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup plugin. -- <pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup</code></pre> and see its structure.
+
+</blockquote>
+
+<hr><p>Official plugins:<br></p>
+
+<blockquote>
+* Cleaner (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup) is an automatic cleaner system. <br>
+Instalation:<br><pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup -O system_clean.kernelup; chmod +x system_clean.kernelup; mv system_clean.kernelup $HOME/.KernelUP_data/Plugins/system_clean.kernelup;</code></pre>
+<br>
+</blockquote>
+
+<p>Author:<br></p>
+
+<blockquote>
+Damian Majchrzak (https://www.facebook.com/DamiaX).
+</blockquote>
       </section>
-    </div>
 
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
               <script type="text/javascript">
             var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
             document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
