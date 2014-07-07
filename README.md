@@ -75,4 +75,6 @@ Create Plugin:<br>
 </blockquote>
 <hr>
 Author:<br>
-Damian Majchrzak [(DamiaX)](https://www.facebook.com/DamiaX).
+<blockquote>
+Damian Majchrzak (https://www.facebook.com/DamiaX).
+</blockquote>
