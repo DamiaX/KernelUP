@@ -64,6 +64,12 @@ rm -rf $xall
 rm -rf $kat
 }
 
+refresh_system()
+{
+apt-get update -y -qq;
+apt-get upgrade -y -qq;	
+}
+
 default_answer()
 {
 if [ -z $answer ]; then
@@ -492,7 +498,8 @@ default_answer;
 if [[ $answer == "N" || $answer == "n" ]]; then
 data_clear
 else
-print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86"
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
+refresh_system;
 
 for LINK in $(cat $x86); do
 wget -q "$LINK" -O kernel$NR.deb
@@ -534,7 +541,8 @@ default_answer;
 if [[ $answer == "N" || $answer == "n" ]]; then
 data_clear
 else
-print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64"
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
+refresh_system;
 
 for LINK in $(cat $x64); do
 wget -q "$LINK" -O kernel$NR.deb
