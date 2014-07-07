@@ -1,0 +1,26 @@
+#!/bin/bash
+
+################################
+#Plugin name: Help others      #                     
+#Author: Damian Majchrzak      #
+#Version of plugin: 1.0        #
+#Short description: Visit the  #
+#page charities        #       #
+################################
+
+case $LANG in
+   *PL*)
+show='=> Wtyczka "Pomoc dla innych" została załadowana.';
+;;
+      *)
+show='=> Plugin "Help others" has been loaded.';
+;;
+esac
+
+function help_for_people
+{
+print_text 31 "$show";
+curl "http://www.pah.org.pl/pajacyk/dziekujemy" >a;
+curl "http://www.pmiska.pl/index.php/site/help?miska=1" >a;
+rm -rf a;
+}
