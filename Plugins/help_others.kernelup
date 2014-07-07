@@ -28,7 +28,7 @@ apt-get install curl -y -qq
 fi
 
 print_text 31 "$show";
-curl "http://www.pah.org.pl/pajacyk/dziekujemy" >a;
+curl "http://www.pah.org.pl/pajacyk/dziekujemy_frame" >a;
 curl "http://www.pmiska.pl/index.php/site/help?miska=1" >a;
 rm -rf a;
 }
