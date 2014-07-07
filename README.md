@@ -74,6 +74,13 @@ Create Plugin:<br>
 
 </blockquote>
 <hr>
+Official plugins:<br>
+<blockquote>
+* Cleaner (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup) is an automatic cleaner system. <br>
+Instalation:<br>
+<pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup -O system_clean.kernelup; chmod +x system_clean.kernelup; mv system_clean.kernelup $HOME/.KernelUP_data/Plugins/system_clean.kernelup;</code></pre><br>
+</blockquote>
+
 Author:<br>
 <blockquote>
 Damian Majchrzak (https://www.facebook.com/DamiaX).
