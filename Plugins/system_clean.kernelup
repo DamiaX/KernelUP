@@ -8,7 +8,6 @@
 #system cleaner.               #
 ################################
 
-
 function system_clean
 {
 find .macromedia/ -name "*.sol" | xargs rm -rf
@@ -23,4 +22,7 @@ apt-get clean -y -qq
 apt-get autoremove --purge -y -qq
 rm -rf /var/cache/apt/archives
 mkdir -p /var/cache/apt/archives/partial/
+rm -rf $HOME/.cache/mozilla/firefox/*.default/*
+rm -rf $HOME/.cache/software-center/*
+rm -rf $HOME/.cache/thumbnails/*
 }
