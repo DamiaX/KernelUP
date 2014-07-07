@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="2.4";
+version="2.5";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -647,7 +647,7 @@ update;
 copy_file;
 remove_old_kernel_init;
 reboot_init;
+load_plugins;
 check_kernel_update;
 data_clear;
-load_plugins;
 echo -e "$name_author";
