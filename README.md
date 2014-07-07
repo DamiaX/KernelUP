@@ -16,7 +16,7 @@ Features:<br>
 <hr>
 GUI Install:<br>
 <blockquote>
-Download [this](https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh) file.<br>
+Download this: https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh file.<br>
 Give permissions to run.
 Run as root this file on terminal.
 </blockquote>
@@ -70,11 +70,9 @@ Install Plugin:<br>
 * To install the plugin just move it to the directory: "~/.KernelUP_data/Plugins/" -- <pre><code>mv PLUGIN_NAME.kernelup $HOME/.KernelUP_data/Plugins/</code></pre>
 
 Create Plugin:<br>
-* Download a [ sample ] (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup) plugin. -- <pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup</code></pre> and see its structure.
+* Download a sample: https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup plugin. -- <pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup</code></pre> and see its structure.
 
 </blockquote>
 <hr>
 Author:<br>
-<blockquote>
-**Damian Majchrzak** [DamiaX](https://www.facebook.com/DamiaX)
-</blockquote>
+Damian Majchrzak [(DamiaX)](https://www.facebook.com/DamiaX).
