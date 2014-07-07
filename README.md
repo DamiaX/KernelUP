@@ -1,51 +1,80 @@
-KernelUP
-========
+About:<blockquote>
 **KernelUP** is a program to automatically update the kernel for **Ubuntu** and **Linux Mint**.
+</blockquote>
+<hr>
+Features:<br>
+<blockquote>
+* Autostart.<br>
+* Automatically checking for kernel version.<br>
+* Notifications about new kernel version.<br>
+* Automatic updates KernelUP.<br>
+* The translations (Polish and English).<br>
+* Removing older versions of the kernel.<br>
+* System Plugin.<br>
 
-Features:
-==========
+</blockquote>
+<hr>
+GUI Install:<br>
+<blockquote>
+Download [this](https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh) file.<br>
+Give permissions to run.
+Run as root this file on terminal.
+</blockquote>
+<hr>
+Terminal Install:<br>
+<blockquote>
+Step 1: Download (Method 1/2: Use <code>wget</code> to download a install script and give permissions to run)
+<pre><code>wget https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup; 
+chmod +x kernelup</code></pre>
 
-* Autostart.
-* Automatically checking for kernel version.
-* Notifications about new kernel version.
-* Automatic updates KernelUP.
-* The translations (Polish and English).
-* Removing older versions of the kernel.
-* System Plugin.
+Step 1: Download (Method 2/2: Use <code>curl</code> to download a install script and give permissions to run)
+<pre><code>curl https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh > kernelup;
+chmod +x kernelup;</code></pre>
 
-Installation KernelUP:
-=============
-* Execute this command from terminal(one liner):
-
-  `sudo rm -rf /usr/local/sbin/kernelup*;  wget -q --no-cache --no-check-certificate https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup; chmod +x kernelup; sudo ./kernelup`
-  
-Or:
-
-* Download [this](https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh) file -- `wget --no-cache -q https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh -O kernelup.sh`, give permissions to run -- `chmod +x kernelup.sh` and run as root this file on terminal -- `sudo kernelup.sh`
-
-Uninstall KernelUP:
-=========
-* Execute this command from terminal(one liner):
-  
-  `sudo rm -rf /tmp/kernelup*; sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png; sudo rm -rf ~/.config/autostart/kernelup-init.desktop; sudo rm -rf /usr/local/sbin/kernelup*; sudo rm -rf /usr/share/applications/kernelup-init.desktop; sudo rm -rf $HOME/.KernelUP_data`
+Step 2: Run as root the <code>kernelup</code> script.
+<pre><code>sudo ./kernelup</code></pre>
+</blockquote>
+<hr>
+Uninstall KernelUP:<br>
+<blockquote>
+Method 1: Manually uninstalling the program files.<br>
+<code>sudo rm -rf /tmp/kernelup*</code> deleting temp files program.<br>
+<code>sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png</code> removing a program icon.<br>
+<code>sudo rm -rf ~/.config/autostart/kernelup-init.desktop</code> removing autostart applications.<br>
+<code>sudo rm -rf /usr/local/sbin/kernelup*</code> removing the application<br>
+<code>sudo rm -rf /usr/share/applications/kernelup-init.desktop</code> delete the '.desktop' file.<br>
+<code>sudo rm -rf $HOME/.KernelUP_data</code> removing configuration files.<br>
       
-or:
+Method 2: Starting automatic uninstaller<br>
+<code>sudo kernelup -r</code><br>
+</blockquote>
+<hr>
+Advanced usage examples and notes:<blockquote>
+<code>-h</code> or <code>--help</code> view the content of help.<br>
+<code>-v</code> or <code>--version</code> display the version of the program.<br>
+<code>-k</code> or <code>--kernel_update</code> check for a new version of the kernel.<br>
+<code>-u</code> or <code>--update</code> check the available program updates.<br>
+<code>-r</code> or <code>--remove</code> remove application.<br>
+<code>-R</code> or <code>--rkernel</code> delete old versions of the kernel in order to free up disk space.<br>
+<code>-c</code> or <code>--copy</code> install program.<br>
+<code>-a</code> or <code>--author</code> display information about the author of the program.<br>
+<code>-pi</code> or <code>--plugin-installer</code> install additional plugins for the program.<br>
+</blockquote>
+<hr>
 
-* Execute this command from terminal:
- 
-  `sudo kernelup -r`
+Create and install Plugin for KernelUP<br>
+<blockquote>
 
-Create and install Plugin for KernelUP
-=====================================
+Install Plugin:<br>
 
-Install Plugin:
---------------
-* To install the plugin just move it to the directory: "~/.KernelUP_data/Plugins/" -- `mv PLUGIN_NAME.kernelup $HOME/.KernelUP_data/Plugins/`
+* To install the plugin just move it to the directory: "~/.KernelUP_data/Plugins/" -- <pre><code>mv PLUGIN_NAME.kernelup $HOME/.KernelUP_data/Plugins/</code></pre>
 
-Create Plugin:
---------------
-* Download a [ sample ] (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup) plugin. -- `wget --no-cache -q https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup` and see its structure.
+Create Plugin:<br>
+* Download a [ sample ] (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup) plugin. -- <pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/example.kernelup</code></pre> and see its structure.
 
-Author: 
-=======
+</blockquote>
+<hr>
+Author:<br>
+<blockquote>
 **Damian Majchrzak** [DamiaX](https://www.facebook.com/DamiaX)**.**
+</blockquote>
