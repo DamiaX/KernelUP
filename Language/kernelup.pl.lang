@@ -31,6 +31,9 @@ kernelup_remove="Usuń aplikację $app_name ze swojego komputera."
 ask_remove='Czy usunąć zainstalowane starsze wersje jądra w celu zwolnienia miejsca na dysku? [T/n]'
 ask_reboot='Uruchomić ponownie komputer w celu dokończenia aktualizacji jądra? [T/n]'
 no_connect='Brak połączenia z Internetem. \nPrzerwano.'
+install_plugin_ok='Pomyślnie zainstalowano plugin do programu KernelUP.'
+install_plugin_error='Wystąpił błąd podczas instalacji pluginu!'
+install_plugin_answer='Podaj adres WWW pluginu do zainstalowania:'
 #parameters
 help='Wyświetl treść pomocy.'
 ver_info='Wyświetl wersję programu.'
@@ -41,3 +44,4 @@ error_unknown_option_text="$app_name_styl: Nieznana opcja '$1'\nWykonaj '$app_na
 copy_info='Zainstaluj program KernelUP.'
 kernel_search='Sprawdź czy nie pojawiła się nowa wersja jądra.'
 delete_old_kernel='Usuń stare wersje jądra w celu zwolnienia miejsca na dysku.'
+plugin_info='Zainstaluj dodatkowe pluginy do programu KernelUP.'
