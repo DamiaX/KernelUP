@@ -29,7 +29,7 @@ chmod +x kernelup</code></pre>
 
 Step 1: Download (Method 2/2: Use <code>curl</code> to download a install script and give permissions to run)
 <pre><code>curl https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh > kernelup;
-chmod +x kernelup;</code></pre>
+chmod +x kernelup</code></pre>
 
 Step 2: Run as root the <code>kernelup</code> script.
 <pre><code>sudo ./kernelup</code></pre>
