@@ -5,7 +5,7 @@
 #Author: Damian Majchrzak      #
 #Version of plugin: 1.0        #
 #Short description: Visit the  #
-#page charities        #       #
+#page charities                #
 ################################
 
 case $LANG in
