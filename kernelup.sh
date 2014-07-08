@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.2";
+version="3.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -47,6 +47,7 @@ latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut 
 log_dir="$HOME/.KernelUP_data";
 plugins_dir="$log_dir/Plugins";
 plugins_extension="*.kernelup";
+plugins_search="kernelup";
 log_name="kernelup.klog";
 log_name_reboot="kernelup_reboot.log";
 
@@ -108,7 +109,9 @@ fi
 load_plugins()
 {
 NR=1
-if [ -f $plugins_dir/$plugins_extension ] ; then
+ls $plugins_dir | grep -q $plugins_search
+if [ $? -eq 0 ]
+then
 for plugins in $plugins_dir/$plugins_extension ; do
 grep -h 'function' $plugins_dir/$plugins_extension >$temp
 sed -i 's@function@@g' $temp
