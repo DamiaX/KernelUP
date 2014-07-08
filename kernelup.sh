@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.1";
+version="3.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -108,9 +108,7 @@ fi
 load_plugins()
 {
 NR=1
-if [ -f $plugins_dir/ ] ; then
-echo -e -n '';
-else
+if [ -f $plugins_dir/$plugins_extension ] ; then
 for plugins in $plugins_dir/$plugins_extension ; do
 grep -h 'function' $plugins_dir/$plugins_extension >$temp
 sed -i 's@function@@g' $temp
