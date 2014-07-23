@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.3";
+version="3.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -109,6 +109,7 @@ fi
 load_plugins()
 {
 NR=1
+if [ -e $plugins_dir ] ; then
 ls $plugins_dir | grep -q $plugins_search
 if [ $? -eq 0 ]
 then
@@ -125,6 +126,10 @@ NR=$[NR + 1]
 done
 rm -rf $temp
 rm -rf $temp
+fi
+else
+mkdir -p $log_dir;
+mkdir -p $plugins_dir;
 fi
 }
 
@@ -259,6 +264,7 @@ fi
 
 procedure_reboot()
 {
+if [ -e $log_dir ] ; then
 rm -rf $log_dir/$log_name_reboot;
 show_text 31 "$ask_reboot";
 read answer;
@@ -268,20 +274,32 @@ reboot;
 else
 touch $log_dir/$log_name_reboot;
 fi
+else
+mkdir -p $log_dir;
+touch $log_dir/$log_name_reboot;
+fi
 }
 
 remove_old_kernel_init()
 {
+if [ -e $log_dir ] ; then
 if [ -e $log_dir/$log_name ] ; then
 remove_old_kernel;
 rm -rf $log_dir/$log_name;
+fi
+else
+mkdir -p $log_dir;
 fi
 }
 
 reboot_init()
 {
+if [ -e $log_dir ] ; then
 if [ -e $log_dir/$log_name_reboot ] ; then
 procedure_reboot;
+fi
+else
+mkdir -p $log_dir;
 fi
 }
 
