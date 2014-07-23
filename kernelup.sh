@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.4";
+version="3.5";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -194,7 +194,7 @@ show_text()
 
 check_security()
 {
-if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint"  ]] ; then
+if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" && "$(lsb_release -si)" != "elementary OS" ]] ; then
    show_text 31 "---[$dist_fail]---" 1>&2
    rm -rf $temp_dir;
    exit 1
