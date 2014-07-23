@@ -74,7 +74,7 @@ apt-get upgrade -y -qq;
 default_answer()
 {
 if [ -z $answer ]; then
-answer='y';l
+answer='y';
 fi
 }
 
