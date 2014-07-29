@@ -449,7 +449,6 @@ zenity --info --title="$app_name" --text="$reboot_now_com";
 
 check_kernel_update()
 {
-	
 mkdir -p $temp_dir;
 cd $temp_dir;
 
@@ -470,7 +469,6 @@ if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel
 if [ -e $log_dir/$log_name_reboot ] ; then
 reboot_notyfication;
 fi
-
 
 if [ $latest_kernel_installed = $latest_kernel_available ] ; then
 
