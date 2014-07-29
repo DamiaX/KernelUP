@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.8";
+version="3.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -262,21 +262,37 @@ update-grub;
 fi
 }
 
+reboot_notyfication()
+{
+ if [ -f "/usr/bin/notify-send" ]; then
+notify-send "$app_name" "$reboot_now_com" -i $icon_path/$icon_name;
+    elif [ -f "/usr/bin/kdialog" ];then
+kdialog --title="$app_name" --msgbox="$reboot_now_com";
+    elif [ -f "/usr/bin/zenity" ];then
+zenity --info --title="$app_name" --text="$reboot_now_com";
+    fi
+}
+
 procedure_reboot()
 {
 if [ -e $log_dir ] ; then
 rm -rf $log_dir/$log_name_reboot;
 show_text 31 "$ask_reboot";
+if [ -e $log_dir/$log_name_reboot ] ; then
+reboot_notyfication;
+fi
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 reboot;
 else
 touch $log_dir/$log_name_reboot;
+exit;
 fi
 else
 mkdir -p $log_dir;
 touch $log_dir/$log_name_reboot;
+exit;
 fi
 }
 
@@ -436,17 +452,6 @@ zenity --info --title="$app_name" --text="$found $you_kernel $latest_kernel_inst
     fi
 }
 
-reboot_notyfication()
-{
- if [ -f "/usr/bin/notify-send" ]; then
-notify-send "$app_name" "$reboot_now_com" -i $icon_path/$icon_name;
-    elif [ -f "/usr/bin/kdialog" ];then
-kdialog --title="$app_name" --msgbox="$reboot_now_com";
-    elif [ -f "/usr/bin/zenity" ];then
-zenity --info --title="$app_name" --text="$reboot_now_com";
-    fi
-}
-
 check_kernel_update()
 {
 mkdir -p $temp_dir;
@@ -465,10 +470,6 @@ sed -i 's@http://kernelup/@@g' $temp1;
 latest_kernel_version=$(cat $temp1 | grep -v rc | tail -n 1);
 latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d "-" -f1 | tr -d v );
 if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
-
-if [ -e $log_dir/$log_name_reboot ] ; then
-reboot_notyfication;
-fi
 
 if [ $latest_kernel_installed = $latest_kernel_available ] ; then
 
