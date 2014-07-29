@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.9";
+version="4.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -277,10 +277,8 @@ procedure_reboot()
 {
 if [ -e $log_dir ] ; then
 rm -rf $log_dir/$log_name_reboot;
-show_text 31 "$ask_reboot";
-if [ -e $log_dir/$log_name_reboot ] ; then
 reboot_notyfication;
-fi
+show_text 31 "$ask_reboot";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
