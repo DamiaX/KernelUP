@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="3.6";
+version="3.7";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -449,6 +449,7 @@ zenity --info --title="$app_name" --text="$reboot_now_com";
 
 check_kernel_update()
 {
+	
 mkdir -p $temp_dir;
 cd $temp_dir;
 
@@ -465,6 +466,11 @@ sed -i 's@http://kernelup/@@g' $temp1;
 latest_kernel_version=$(cat $temp1 | grep -v rc | tail -n 1);
 latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d "-" -f1 | tr -d v );
 if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
+
+if [ -e $log_dir/$log_name_reboot ] ; then
+reboot_notyfication;
+fi
+
 
 if [ $latest_kernel_installed = $latest_kernel_available ] ; then
 
@@ -495,11 +501,7 @@ awk -vRS="</program2>" '{gsub(/.*<program2.*>/,"");print}' $temp4 > $x86;
 sed -i "s@<program2>@<program3>@g" $temp4;
 awk -vRS="</program3>" '{gsub(/.*<program3.*>/,"");print}' $temp4 > $xall;
 
-if [ -e $log_dir/$log_name_reboot ] ; then
-reboot_notyfication;
-else
 notyfication;
-fi
 
 print_text 33 "=> $you_kernel $latest_kernel_installed"
 print_text 35 "=> $new_version_kernel $latest_kernel_available"
