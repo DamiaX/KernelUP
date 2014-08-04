@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="4.0";
+version="4.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -442,11 +442,11 @@ fi
 notyfication()
 {
     if [ -f "/usr/bin/notify-send" ]; then
-notify-send "$app_name" "$found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1" -i $icon_path/$icon_name;
+notify-send "$app_name" " $found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1" -i $icon_path/$icon_name;
     elif [ -f "/usr/bin/kdialog" ];then
-kdialog --title="$app_name" --msgbox="$found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1";
+kdialog --title="$app_name" --msgbox=" $found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1";
     elif [ -f "/usr/bin/zenity" ];then
-zenity --info --title="$app_name" --text="$found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1";
+zenity --info --title="$app_name" --text=" $found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available\n $found1";
     fi
 }
 
