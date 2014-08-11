@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="4.2";
+version="4.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -50,6 +50,7 @@ plugins_extension="*.kernelup";
 plugins_search="kernelup";
 log_name="kernelup.klog";
 log_name_reboot="kernelup_reboot.log";
+arg2="$2";
 
 data_clear()
 {
@@ -226,18 +227,29 @@ fi
 fi
 }
 
-install_plugins()
+check_install_plugin()
 {
-show_text 31 "$install_plugin_answer";
-read adres;
-wget -q --no-cache $adres -O $plugins_dir/$RANDOM.kernelup;
-
 if [ $? -eq 0 ]
     then
 echo -e -n '';
 else
 show_text 31 "$install_plugin_error";
-fi 
+exit;
+fi
+}
+
+install_plugins()
+{
+if [ -z "$arg2" ] ; then
+show_text 31 "$install_plugin_answer";
+read adres;
+wget -q --no-cache $adres -O $plugins_dir/$RANDOM.kernelup;
+check_install_plugin;
+else
+wget -q --no-cache $arg2 -O $plugins_dir/$RANDOM.kernelup;
+check_install_plugin;
+fi
+ 
 chmod 777 $plugins_dir/*.kernelup;
 if [ $? -eq 0 ]
     then
