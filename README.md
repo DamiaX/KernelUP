@@ -78,11 +78,17 @@ Official plugins:<br>
 <blockquote>
 * Cleaner (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup) is an automatic cleaner system. <br>
 Instalation:<br>
+Method 1: Manual installation<br>
 <pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup -O system_clean.kernelup; chmod +x system_clean.kernelup; mv system_clean.kernelup $HOME/.KernelUP_data/Plugins/system_clean.kernelup;</code></pre><br>
+Method 2: Automatic installation<br>
+<pre><code>kernelup -pi https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup</code></pre><br>
 
 * Help others (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup) visited pages automatically charity in order to click on reflink.<br>
 Instalation:<br>
+Method 1: Manual installation<br>
 <pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup -O help_others.kernelup; chmod +x help_others.kernelup; mv help_others.kernelup $HOME/.KernelUP_data/Plugins/help_others.kernelup;</code></pre><br>
+Method 2: Automatic installation<br>
+<pre><code>kernelup -pi https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup</code></pre><br>
 
 </blockquote>
 
