@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="4.3";
+version="4.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -361,6 +361,56 @@ copy_error;
 fi
 }
 
+update_app()
+{
+if [ -e $app_dir/$app_name_male ] ; then
+echo -e -n '';
+else
+
+if [ -e $autostart_dir ] ; then
+echo -e -n '';
+else
+mkdir -p $autostart_dir
+fi
+
+cp $0 $app_dir/$app_name_male
+check_success_copy;
+cp $app_name_male*.lang $app_dir
+check_success_copy;
+wget -q $init_url -O $init_name;
+check_success_copy;
+wget -q $desktop_url -O $desktop_name;
+check_success_copy;
+wget -q $icon_url -O $icon_name;
+check_success_copy;
+wget -q $kernelup_run_url -O $kernelup_run_name;
+check_success_copy;
+chmod +x $init_name;
+check_success_copy;
+chmod +x $kernelup_run_name;
+check_success_copy;
+mv $icon_name $icon_path;
+check_success_copy;
+mv $init_name $app_dir;
+check_success_copy;
+mv $kernelup_run_name $app_dir;
+check_success_copy;
+cp $desktop_name $autostart_dir;
+check_success_copy;
+mv $desktop_name $applications_path;
+check_success_copy;
+create_app_data;
+check_success_copy;
+add_chmod;
+check_success_copy;
+
+if [ $? -eq 0 ]
+    then
+print_text 33 "=> $copy_ok";
+echo -e "\E[37;1m=> $run\033[0m" "\E[35;1msudo $app_name_male\033[0m";
+fi
+fi
+
 copy_file()
 {
 if [ -e $app_dir/$app_name_male ] ; then
@@ -665,6 +715,10 @@ exit;;
  "--systemreboot"|"-sr")
     check_security;
     procedure_reboot;
+exit;;
+ "--install_update"|"-iu")
+    check_security;
+    update_app;
 exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
