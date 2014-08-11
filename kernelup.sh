@@ -410,6 +410,7 @@ print_text 33 "=> $copy_ok";
 echo -e "\E[37;1m=> $run\033[0m" "\E[35;1msudo $app_name_male\033[0m";
 fi
 fi
+}
 
 copy_file()
 {
