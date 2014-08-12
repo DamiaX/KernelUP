@@ -5,9 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
-    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
-    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
 
     <!--[if lt IE 9]>
     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
@@ -20,7 +20,7 @@
     <header>
       <div class="inner">
         <h1>KernelUP</h1>
-        <h2>Automatic Ubuntu and Linux Mint kernel updater</h2>
+        <h2>Automatic Ubuntu, elementary OS and Linux Mint kernel updater</h2>
         <a href="https://github.com/DamiaX/KernelUP" class="button"><small>View project on</small>GitHub</a>
       </div>
     </header>
@@ -96,11 +96,17 @@ Create Plugin:<br>
 
 <blockquote>
 * Cleaner (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup) is an automatic cleaner system. <br>
-Instalation:<br><pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup -O system_clean.kernelup; chmod +x system_clean.kernelup; mv system_clean.kernelup $HOME/.KernelUP_data/Plugins/system_clean.kernelup;</code></pre>
+Instalation:<br>
+Method 1: Manual installation<br><pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup -O system_clean.kernelup; chmod +x system_clean.kernelup; mv system_clean.kernelup $HOME/.KernelUP_data/Plugins/system_clean.kernelup;</code></pre>
+<br>
+Method 2: Automatic installation<br><pre><code>kernelup -pi https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/system_clean.kernelup</code></pre>
 <br>
 
 * Help others (https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup) visited pages automatically charity in order to click on reflink.<br>
-Instalation:<br><pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup -O help_others.kernelup; chmod +x help_others.kernelup; mv help_others.kernelup $HOME/.KernelUP_data/Plugins/help_others.kernelup;</code></pre>
+Instalation:<br>
+Method 1: Manual installation<br><pre><code>wget https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup -O help_others.kernelup; chmod +x help_others.kernelup; mv help_others.kernelup $HOME/.KernelUP_data/Plugins/help_others.kernelup;</code></pre>
+<br>
+Method 2: Automatic installation<br><pre><code>kernelup -pi https://raw.githubusercontent.com/DamiaX/KernelUP/master/Plugins/help_others.kernelup</code></pre>
 <br>
 </blockquote>
 
