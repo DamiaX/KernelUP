@@ -1,8 +1,8 @@
 [Desktop Entry]
 Name=KernelUP
 Name[pl]=KernelUP
-Comment=Automatic Ubuntu kernel updater
-Comment[pl]=Automatyczny aktualizator jądra Ubuntu
+Comment=Update the Linux kernel.
+Comment[pl]=Zaktualizuj jądro operacyjne Linux.
 Categories=Application
 Exec=kernelup-run
 Terminal=false
