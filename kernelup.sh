@@ -64,6 +64,12 @@ rm -rf $x64
 rm -rf $x86
 rm -rf $xall
 rm -rf $kat
+rm -rf $up
+}
+
+nothing()
+{
+  echo -e -n '';
 }
 
 refresh_system()
@@ -82,14 +88,14 @@ fi
 create_app_data()
 {
 if [ -e $log_dir ] ; then
-echo -e -n '';
+nothing;
 else
 mkdir -p $log_dir;
 chmod 777 $log_dir;
 fi
 
 if [ -e $plugins_dir ] ; then
-echo -e -n '';
+nothing;
 else
 mkdir -p $plugins_dir;
 chmod 777 $plugins_dir;
@@ -138,7 +144,7 @@ langpl()
 {
 if [ -e $app_dir/$app ] ; then
 if [ -e $app_dir/$pl ] ; then
-echo -e -n '';
+nothing;
 else
 wget -q $kernelup_pl_url -O  $app_dir/$pl
 fi
@@ -151,7 +157,7 @@ langen()
 {
 if [ -e $app_dir/$app ] ; then
 if [ -e $app_dir/$en ] ; then
-echo -e -n '';
+nothing;
 else
 wget -q $kernelup_en_url -O  $app_dir/$en
 fi
@@ -202,7 +208,7 @@ if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" &&
 fi
 
 if [ "$(id -u)" != "0" ]; then
-show_text 31 "$root_fail" 1>&2
+   show_text 31 "$root_fail" 1>&2
    rm -rf $temp_dir;
    exit 1
 fi
@@ -231,7 +237,7 @@ check_install_plugin()
 {
 if [ $? -eq 0 ]
     then
-echo -e -n '';
+nothing;
 else
 show_text 31 "$install_plugin_error";
 exit;
@@ -351,24 +357,25 @@ chmod +x $remove_name;
 exit;
 }
 
+
 check_success_copy()
 {
 if [ $? -eq 0 ]
     then
-echo -e -n '';
+   nothing;
 else
-copy_error;
+   copy_error;
 fi
 }
 
 update_app()
 {
 if [ -e $app_dir/$app_name_male ] ; then
-echo -e -n '';
+nothing;
 else
 
 if [ -e $autostart_dir ] ; then
-echo -e -n '';
+nothing;
 else
 mkdir -p $autostart_dir
 fi
@@ -415,7 +422,7 @@ fi
 copy_file()
 {
 if [ -e $app_dir/$app_name_male ] ; then
-echo -e -n '';
+nothing;
 else
 show_text 31 "=> $copy_file";
 read answer;
@@ -424,7 +431,7 @@ default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 
 if [ -e $autostart_dir ] ; then
-echo -e -n '';
+nothing;
 else
 mkdir -p $autostart_dir
 fi
