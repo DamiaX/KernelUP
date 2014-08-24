@@ -67,11 +67,6 @@ rm -rf $kat
 rm -rf $up
 }
 
-nothing()
-{
-  echo -e -n '';
-}
-
 refresh_system()
 {
 apt-get update -y -qq;
@@ -87,16 +82,12 @@ fi
 
 create_app_data()
 {
-if [ -e $log_dir ] ; then
-nothing;
-else
+if [ ! -e $log_dir ] ; then
 mkdir -p $log_dir;
 chmod 777 $log_dir;
 fi
 
-if [ -e $plugins_dir ] ; then
-nothing;
-else
+if [ ! -e $plugins_dir ] ; then
 mkdir -p $plugins_dir;
 chmod 777 $plugins_dir;
 fi
@@ -143,9 +134,7 @@ fi
 langpl()
 {
 if [ -e $app_dir/$app ] ; then
-if [ -e $app_dir/$pl ] ; then
-nothing;
-else
+if [ ! -e $app_dir/$pl ] ; then
 wget -q $kernelup_pl_url -O  $app_dir/$pl
 fi
 else
@@ -156,9 +145,7 @@ fi
 langen()
 {
 if [ -e $app_dir/$app ] ; then
-if [ -e $app_dir/$en ] ; then
-nothing;
-else
+if [ ! -e $app_dir/$en ] ; then
 wget -q $kernelup_en_url -O  $app_dir/$en
 fi
 else
@@ -235,10 +222,8 @@ fi
 
 check_install_plugin()
 {
-if [ $? -eq 0 ]
-    then
-nothing;
-else
+if [ $? != 0 ]
+then
 show_text 31 "$install_plugin_error";
 exit;
 fi
@@ -357,26 +342,20 @@ chmod +x $remove_name;
 exit;
 }
 
-
 check_success_copy()
 {
-if [ $? -eq 0 ]
-    then
-   nothing;
-else
+if [ $? != 0 ]
+then
    copy_error;
 fi
 }
 
 update_app()
 {
-if [ -e $app_dir/$app_name_male ] ; then
-nothing;
-else
+if [ ! -e $app_dir/$app_name_male ] ; then
 
-if [ -e $autostart_dir ] ; then
-nothing;
-else
+if [ ! -e $autostart_dir ] ; then
+
 mkdir -p $autostart_dir
 fi
 
@@ -421,18 +400,16 @@ fi
 
 copy_file()
 {
-if [ -e $app_dir/$app_name_male ] ; then
-nothing;
-else
+if [ ! -e $app_dir/$app_name_male ] ; then
+
 show_text 31 "=> $copy_file";
 read answer;
 default_answer;
 
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 
-if [ -e $autostart_dir ] ; then
-nothing;
-else
+if [ ! -e $autostart_dir ] ; then
+
 mkdir -p $autostart_dir
 fi
 
