@@ -240,7 +240,6 @@ else
 wget -q --no-cache $arg2 -O $plugins_dir/$RANDOM.kernelup;
 check_install_plugin;
 fi
- 
 chmod 777 $plugins_dir/*.kernelup;
 if [ $? -eq 0 ]
     then
@@ -353,9 +352,7 @@ fi
 update_app()
 {
 if [ ! -e $app_dir/$app_name_male ] ; then
-
 if [ ! -e $autostart_dir ] ; then
-
 mkdir -p $autostart_dir
 fi
 
@@ -401,15 +398,12 @@ fi
 copy_file()
 {
 if [ ! -e $app_dir/$app_name_male ] ; then
-
 show_text 31 "=> $copy_file";
 read answer;
 default_answer;
 
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-
 if [ ! -e $autostart_dir ] ; then
-
 mkdir -p $autostart_dir
 fi
 
@@ -517,7 +511,6 @@ latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d
 if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
 
 if [ $latest_kernel_installed = $latest_kernel_available ] ; then
-
 print_text 32 "=> $kernel_update";
 
 else
@@ -554,7 +547,6 @@ check_security;
 arch2=`uname -m`
 
 if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
-
 print_text 31 "$install_new_kernel"
 
 read answer;
@@ -604,7 +596,7 @@ read answer;
 default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
-data_clear
+data_clear;
 else
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
 refresh_system;
@@ -633,17 +625,12 @@ procedure_reboot;
 else
 print_text 31 "$instalation_error"
 fi
-
 cd ..
-
 rm -rf $kat
-
 fi
-
 else
 print_text 31 "=> $unsup_arch"
 fi
-
 fi
 cd $actual_dir
 rm -rf $temp_dir
