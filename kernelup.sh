@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="4.7";
+version="4.8";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -104,10 +104,22 @@ chmod 777 $plugins_dir;
 fi
 }	
 
+remove_empty_plugins()
+{
+for file in $plugins_dir/$plugins_extension
+do
+        if [[ ! -s $file ]] && [[ -f $file ]] && [[ ! -L $file ]]
+        then
+                rm $file -f
+        fi
+done
+}
+
 load_plugins()
 {
 NR=1
 if [ -e $plugins_dir ] ; then
+remove_empty_plugins;
 ls $plugins_dir | grep -q $plugins_search
 if [ $? -eq 0 ]
 then
@@ -246,6 +258,7 @@ if [ $? -eq 0 ]
 show_text 32 "$install_plugin_ok";
 else
 show_text 31 "$install_plugin_error";
+remove_empty_plugins;
 fi 
 }
 
