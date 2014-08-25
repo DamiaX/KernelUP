@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="4.6";
+version="4.7";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -122,8 +122,8 @@ function_name=`cat "$temp" | sed -n "$NR p"`
 $function_name
 NR=$[NR + 1]
 done
-rm -rf $temp
-rm -rf $temp
+rm -rf $temp;
+rm -rf $temp2;
 fi
 else
 mkdir -p $log_dir;
