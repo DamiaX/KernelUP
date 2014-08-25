@@ -191,13 +191,13 @@ check_security()
 if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" && "$(lsb_release -si)" != "elementary OS" ]] ; then
    show_text 31 "---[$dist_fail]---" 1>&2
    rm -rf $temp_dir;
-   exit 1
+   exit;
 fi
 
 if [ "$(id -u)" != "0" ]; then
    show_text 31 "$root_fail" 1>&2
    rm -rf $temp_dir;
-   exit 1
+   exit;
 fi
 }
 
@@ -214,7 +214,7 @@ if [ "$?" -eq "2" ];
 then
 show_text 31 "$no_connect";
 rm -rf $temp;
-exit 1;
+exit;
 fi
 fi
 fi
@@ -476,7 +476,7 @@ rm -rf $temp2
 rm -rf $temp3
 rm -rf $url
 ./"$up"
-exit
+exit;
 fi
 }
 
@@ -649,11 +649,11 @@ case "$1" in
    echo "-c, --copy: $copy_info";
    echo "-a, --author: $author_info"; 
    echo "-pi, --plugin-installer: $plugin_info"; 
-exit ;;
+exit;;
    "--version"|"-v") 
    echo -e "$app_name_styl"
    echo "$version_info $version"; 
-exit ;;
+exit;;
    "--update"|"-u")
    check_security;
    test_connect;
@@ -698,7 +698,7 @@ exit;;
 exit;;
 *)    
       echo -e "$error_unknown_option_text"
-      exit 1;
+      exit;
       ;;
     esac
 done
