@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="4.8";
+version="4.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -257,8 +257,8 @@ if [ $? -eq 0 ]
     then
 show_text 32 "$install_plugin_ok";
 else
-show_text 31 "$install_plugin_error";
 remove_empty_plugins;
+show_text 31 "$install_plugin_error";
 fi 
 }
 
