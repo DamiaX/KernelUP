@@ -27,4 +27,5 @@ rm -rf $temp;
 wget -q $url -O $name;
 chmod +x $name;
 ./$name -iu;
+rm -rf up.sh
 exit;
