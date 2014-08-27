@@ -658,7 +658,7 @@ exit;;
    check_security;
    test_connect;
    rm -rf "$app_dir/$app_name_male*";
-   copy_file -y; 
+   install_file 1;
 exit;;
  "--systemreboot"|"-sr")
     check_security;
