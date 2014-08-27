@@ -22,7 +22,6 @@ icon_name='kernelup.png';
 init_name='kernelup-init';
 desktop_name='kernelup-init.desktop';
 remove_name='remove.sh';
-script_kernel_remove_name='kernel_remove.sh';
 kernelup_run_name='kernelup-run';
 temp=".kernel.temp";
 temp1=".kernel1.temp";
