@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="5.0";
+version="5.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -90,6 +90,11 @@ fi
 if [ ! -e $plugins_dir ] ; then
 mkdir -p $plugins_dir;
 chmod 777 $plugins_dir;
+fi
+
+if [ ! -e $autostart_dir ] ; then
+mkdir -p $autostart_dir;
+chmod 777 $autostart_dir;
 fi
 }
 
@@ -361,13 +366,8 @@ then
 fi
 }
 
-update_app()
+copy_file()
 {
-if [ ! -e $app_dir/$app_name_male ] ; then
-if [ ! -e $autostart_dir ] ; then
-mkdir -p $autostart_dir
-fi
-
 cp $0 $app_dir/$app_name_male
 check_success_copy;
 cp $app_name_male*.lang $app_dir
@@ -404,58 +404,22 @@ if [ $? -eq 0 ]
 print_text 33 "=> $copy_ok";
 echo -e "\E[37;1m=> $run\033[0m" "\E[35;1msudo $app_name_male\033[0m";
 fi
-fi
 }
 
-copy_file()
+install_file()
 {
+if [ "$1" = "1" ]
+then
 if [ ! -e $app_dir/$app_name_male ] ; then
 show_text 31 "=> $copy_file";
 read answer;
 default_answer;
-
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-if [ ! -e $autostart_dir ] ; then
-mkdir -p $autostart_dir
-fi
-
-cp $0 $app_dir/$app_name_male
-check_success_copy;
-cp $app_name_male*.lang $app_dir
-check_success_copy;
-wget -q $init_url -O $init_name;
-check_success_copy;
-wget -q $desktop_url -O $desktop_name;
-check_success_copy;
-wget -q $icon_url -O $icon_name;
-check_success_copy;
-wget -q $kernelup_run_url -O $kernelup_run_name;
-check_success_copy;
-chmod +x $init_name;
-check_success_copy;
-chmod +x $kernelup_run_name;
-check_success_copy;
-mv $icon_name $icon_path;
-check_success_copy;
-mv $init_name $app_dir;
-check_success_copy;
-mv $kernelup_run_name $app_dir;
-check_success_copy;
-cp $desktop_name $autostart_dir;
-check_success_copy;
-mv $desktop_name $applications_path;
-check_success_copy;
-create_app_data;
-check_success_copy;
-add_chmod;
-check_success_copy;
-
-if [ $? -eq 0 ]
-    then
-print_text 33 "=> $copy_ok";
-echo -e "\E[37;1m=> $run\033[0m" "\E[35;1msudo $app_name_male\033[0m";
+copy_file;
 fi
 fi
+else
+copy_file;
 fi
 }
 
@@ -702,7 +666,7 @@ exit;;
 exit;;
  "--install_update"|"-iu")
     check_security;
-    update_app;
+    install_file 0;
 exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
@@ -720,7 +684,7 @@ check_security;
 echo -e "$app_name_styl"
 test_connect;
 update;
-copy_file;
+install_file 1;
 remove_old_kernel_init;
 reboot_init;
 load_plugins;
