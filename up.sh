@@ -4,25 +4,13 @@
 #http://damiax.github.io/kernelup/
 
 url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh";
-temp=".temp";
+remove_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/remove.sh"
 name="kernelup";
+remove_name="remove.sh"
 
-ps -e | grep 'kernelup-init' >$temp
-
-if [ -s $temp ]
- then
-killall 'sleep';
-killall kernelup-init;
-fi
-
-sudo rm -rf /tmp/kernelup*; 
-sudo rm -rf /usr/share/icons/hicolor/128x128/apps/kernelup.png; 
-sudo rm -rf ~/.config/autostart/kernelup*;
-sudo rm -rf /usr/local/sbin/kernelup*; 
-sudo rm -rf /usr/share/applications/kernelup*;
-sudo rm -rf kernelup*;
-
-rm -rf $temp;
+wget -q $remove_url -O $remove_name;
+chmod +x $remove_name;
+./$remove_name;
 
 wget -q $url -O $name;
 chmod +x $name;
