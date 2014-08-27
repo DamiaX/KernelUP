@@ -22,6 +22,6 @@ sudo rm -rf $HOME/.KernelUP_data;
 sudo rm -rf kernelup*; 
 rm -rf $temp;
 
-sudo rm -rf "remove.sh"
+sudo rm -rf $0;
 
 exit;
