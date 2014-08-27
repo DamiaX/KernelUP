@@ -79,24 +79,6 @@ answer='y';
 fi
 }
 
-create_app_data()
-{
-if [ ! -e $log_dir ] ; then
-mkdir -p $log_dir;
-chmod 777 $log_dir;
-fi
-
-if [ ! -e $plugins_dir ] ; then
-mkdir -p $plugins_dir;
-chmod 777 $plugins_dir;
-fi
-
-if [ ! -e $autostart_dir ] ; then
-mkdir -p $autostart_dir;
-chmod 777 $autostart_dir;
-fi
-}
-
 add_chmod()
 {
 if [ -e $log_dir ] ; then
@@ -106,7 +88,27 @@ fi
 if [ -e $plugins_dir ] ; then
 chmod 777 $plugins_dir;
 fi
-}	
+
+if [ -e $autostart_dir ] ; then
+chmod 777 $autostart_dir;
+fi
+}
+
+create_app_data()
+{
+if [ ! -e $log_dir ] ; then
+mkdir -p $log_dir;
+fi
+
+if [ ! -e $plugins_dir ] ; then
+mkdir -p $plugins_dir;
+fi
+
+if [ ! -e $autostart_dir ] ; then
+mkdir -p $autostart_dir;
+fi
+add_chmod;
+}
 
 remove_empty_plugins()
 {
