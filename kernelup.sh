@@ -206,7 +206,7 @@ show_text()
 
 check_security()
 {
-if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" && "$(lsb_release -si)" != "elementary OS" ]] ; then
+if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" && "$(lsb_release -si)" != "elementary OS" && "$(lsb_release -si)" != "Debian" ]] ; then
    show_text 31 "---[$dist_fail]---" 1>&2
    rm -rf $temp_dir;
    exit;
