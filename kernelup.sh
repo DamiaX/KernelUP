@@ -172,20 +172,22 @@ fi
 }
 
 case $LANG in
-   *PL*) 
+*PL*) 
 langpl;
 if [ -e $app_dir/$pl ] ; then
 source $app_dir/$pl;
 else
 source $pl;
-fi;;
-      *) 
+fi
+ ;;
+*) 
 langen;
 if [ -e $app_dir/$en ] ; then
 source $app_dir/$en;
 else
 source $en;
-fi;;
+fi
+ ;;
 esac
 
 print_text()
