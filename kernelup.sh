@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="5.2";
+version="5.2.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -167,7 +167,7 @@ if [ ! -e $app_dir/$en ] ; then
 wget -q $kernelup_en_url -O  $app_dir/$en
 fi
 else
-wget -q $kernelup_pl_url -O  $en
+wget -q $kernelup_en_url -O  $en
 fi
 }
 
