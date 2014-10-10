@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="5.1";
+version="5.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -171,22 +171,32 @@ wget -q $kernelup_pl_url -O  $en
 fi
 }
 
-case $LANG in
-*PL*) 
-langpl;
+lang_init_pl()
+{
 if [ -e $app_dir/$pl ] ; then
 source $app_dir/$pl;
 else
 source $pl;
 fi
- ;;
-*) 
-langen;
+}
+
+lang_init_en()
+{
 if [ -e $app_dir/$en ] ; then
 source $app_dir/$en;
 else
 source $en;
 fi
+}
+
+case $LANG in
+*PL*) 
+langpl;
+lang_init_pl;
+ ;;
+*) 
+langen;
+lang_init_en;
  ;;
 esac
 
