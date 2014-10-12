@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="5.4";
+version="5.5";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -426,11 +426,11 @@ show_text 31 "=> $install_file";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-install_app;
+install_file;
 fi
 fi
 else
-install_app;
+install_file;
 fi
 }
 
@@ -669,7 +669,7 @@ exit;;
    check_security;
    test_connect;
    rm -rf "$app_dir/$app_name_male*";
-   install_app 1;
+   install_file 1;
 exit;;
  "--systemreboot"|"-sr")
     check_security;
@@ -677,7 +677,7 @@ exit;;
 exit;;
  "--install_update"|"-iu")
     check_security;
-    install_app 0;
+    install_file 0;
 exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
@@ -695,7 +695,7 @@ check_security;
 echo -e "$app_name_styl"
 test_connect;
 update;
-install_app 1;
+install_file 1;
 remove_old_kernel_init;
 reboot_init;
 load_plugins;
