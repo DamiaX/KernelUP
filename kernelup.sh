@@ -426,11 +426,11 @@ show_text 31 "=> $install_file";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-install_file;
+install_app;
 fi
 fi
 else
-install_file;
+install_app;
 fi
 }
 
