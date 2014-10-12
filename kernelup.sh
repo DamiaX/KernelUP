@@ -360,59 +360,59 @@ exit;
 fi
 }
 
-copy_error()
+install_error()
 {
-print_text 31 "$copy_wrong";
+print_text 31 "$install_wrong";
 wget -q $remove_url -O $remove_name;
 chmod +x $remove_name;
 ./$remove_name;
 exit;
 }
 
-check_success_copy()
+check_success_install()
 {
 if [ $? != 0 ]
 then
-   copy_error;
+   install_error;
 fi
 }
 
-copy_file()
+install_file()
 {
 cp $0 $app_dir/$app_name_male
-check_success_copy;
+check_success_install;
 cp $app_name_male*.lang $app_dir
-check_success_copy;
+check_success_install;
 wget -q $init_url -O $init_name;
-check_success_copy;
+check_success_install;
 wget -q $desktop_url -O $desktop_name;
-check_success_copy;
+check_success_install;
 wget -q $icon_url -O $icon_name;
-check_success_copy;
+check_success_install;
 wget -q $kernelup_run_url -O $kernelup_run_name;
-check_success_copy;
+check_success_install;
 chmod +x $init_name;
-check_success_copy;
+check_success_install;
 chmod +x $kernelup_run_name;
-check_success_copy;
+check_success_install;
 mv $icon_name $icon_path;
-check_success_copy;
+check_success_install;
 mv $init_name $app_dir;
-check_success_copy;
+check_success_install;
 mv $kernelup_run_name $app_dir;
-check_success_copy;
+check_success_install;
 cp $desktop_name $autostart_dir;
-check_success_copy;
+check_success_install;
 mv $desktop_name $applications_path;
-check_success_copy;
+check_success_install;
 create_app_data;
-check_success_copy;
+check_success_install;
 add_chmod;
-check_success_copy;
+check_success_install;
 
 if [ $? -eq 0 ]
     then
-print_text 33 "=> $copy_ok";
+print_text 33 "=> $install_ok";
 echo -e "\E[37;1m=> $run\033[0m" "\E[35;1msudo $app_name_male\033[0m";
 fi
 }
@@ -422,15 +422,15 @@ install_file()
 if [ "$1" = "1" ]
 then
 if [ ! -e $app_dir/$app_name_male ] ; then
-show_text 31 "=> $copy_file";
+show_text 31 "=> $install_file";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-copy_file;
+install_file;
 fi
 fi
 else
-copy_file;
+install_file;
 fi
 }
 
@@ -633,7 +633,7 @@ case "$1" in
    echo "-k, --kernel_update: $kernel_search";
    echo "-r, --remove: $kernelup_remove";  
    echo "-R, --rkernel: $delete_old_kernel";
-   echo "-c, --copy: $copy_info";
+   echo "-i, --install: $install_info";
    echo "-a, --author: $author_info"; 
    echo "-pi, --plugin-installer: $plugin_info"; 
 exit;;
@@ -665,7 +665,7 @@ exit;;
    check_security;
    remove_old_kernel;
 exit;;
- "--copy"|"-c")
+ "--install"|"-i")
    check_security;
    test_connect;
    rm -rf "$app_dir/$app_name_male*";
