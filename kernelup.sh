@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="5.2.1";
+version="5.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
