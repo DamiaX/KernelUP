@@ -3,7 +3,7 @@
 #Copyright © 2014 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
-version="5.6";
+version="5.7";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -295,11 +295,11 @@ fi
 reboot_notyfication()
 {
  if [ -f "/usr/bin/notify-send" ]; then
-notify-send "$app_name" " $reboot_now_com" -i $icon_path/$icon_name;
+notify-send "$app_name" "$reboot_now_com" -i $icon_path/$icon_name;
     elif [ -f "/usr/bin/kdialog" ];then
-kdialog --title="$app_name" --msgbox=" $reboot_now_com";
+kdialog --title="$app_name" --msgbox="$reboot_now_com";
     elif [ -f "/usr/bin/zenity" ];then
-zenity --info --title="$app_name" --text=" $reboot_now_com";
+zenity --info --title="$app_name" --text="$reboot_now_com";
     fi
 }
 
