@@ -379,6 +379,7 @@ fi
 
 install_app()
 {
+create_app_data;
 cp $0 $app_dir/$app_name_male
 check_success_install;
 cp $app_name_male*.lang $app_dir
@@ -404,8 +405,6 @@ check_success_install;
 cp $desktop_name $autostart_dir;
 check_success_install;
 mv $desktop_name $applications_path;
-check_success_install;
-create_app_data;
 check_success_install;
 add_chmod;
 check_success_install;
