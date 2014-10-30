@@ -1,9 +1,10 @@
 #!/bin/bash
 
 #Copyright © 2014 Damian Majchrzak (DamiaX)
-#http://damiax.github.io/kernelup/
+#Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
+#https://github.com/DamiaX/KernelUP/
 
-version="5.8";
+version="5.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -40,7 +41,7 @@ app_dir='/usr/local/sbin';
 icon_path='/usr/share/icons/hicolor/128x128/apps';
 applications_path='/usr/share/applications/';
 actual_dir="$(pwd)";
-temp_dir="$HOME/temp_dir";
+temp_dir="$HOME/.kernelup_temp_dir";
 autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
 log_dir="$HOME/.KernelUP_data";
