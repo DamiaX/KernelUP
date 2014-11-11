@@ -7,14 +7,17 @@
 #Short description: Automatic  #
 #system cleaner.               #
 ################################
+temp=".system_clean.data";
+
+check_security;
 
 function system_clean
 {
 find .macromedia/ -name "*.sol" | xargs rm -rf
-find /var/log/ -name "*.log.*"  >a
-delete_files=`cat "a"`
-rm -rf $delete_files
-rm -rf a
+find /var/log/ -name "*.log.*"  >$temp;
+delete_files=`cat $temp`
+rm -rf $delete_files;
+rm -rf $temp;
 rm -rf /tmp/*
 apt-get -f install -y -qq
 apt-get autoclean -y -qq
