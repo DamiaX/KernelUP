@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="5.9";
+version="6.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -16,27 +16,11 @@ remove_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/remove
 desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup.desktop';
 icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png';
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
-connect_test_url1='google.com';
-connect_test_url2='facebook.com';
-connect_test_url3='kernel.org';
-icon_name='kernelup.png';
-init_name='kernelup-init';
-desktop_name='kernelup-init.desktop';
-remove_name='remove.sh';
-kernelup_run_name='kernelup-run';
-temp=".kernel.temp";
-temp1=".kernel1.temp";
-temp2=".kernel2.temp";
-temp3=".kernel3.temp";
-temp4=".kernel4.temp";
-url=".url.temp";
-x64=".x64.link";
-x86=".x86.link";
-xall=".xall.link";
-kat=".install_katalog";
-pl='kernelup.pl.lang';
-en='kernelup.en.lang';
-up='up.sh';
+connect_test_url=(google.com facebook.com kernel.org);
+temp=(.kernel.temp .kernel1.temp .kernel2.temp .kernel3.temp .kernel4.temp .url.temp .x64.link .86.link .xall.link .install_katalog up.sh);
+kernelup_file_name=(kernelup.png kernelup-init kernelup-init.desktop remove.sh kernelup-run);
+kernelup_lang_name=(kernelup.pl.lang kernelup.en.lang);
+kernelup_log_name=(kernelup.klog kernelup_reboot.log);
 app_dir='/usr/local/sbin';
 icon_path='/usr/share/icons/hicolor/128x128/apps';
 applications_path='/usr/share/applications/';
@@ -48,24 +32,7 @@ log_dir="$HOME/.KernelUP_data";
 plugins_dir="$log_dir/Plugins";
 plugins_extension="*.kernelup";
 plugins_search="kernelup";
-log_name="kernelup.klog";
-log_name_reboot="kernelup_reboot.log";
 arg2="$2";
-
-data_clear()
-{
-rm -rf $temp
-rm -rf $temp1
-rm -rf $temp2
-rm -rf $temp3
-rm -rf $temp4
-rm -rf $url
-rm -rf $x64
-rm -rf $x86
-rm -rf $xall
-rm -rf $kat
-rm -rf $up
-}
 
 refresh_system()
 {
@@ -131,18 +98,18 @@ ls $plugins_dir | grep -q $plugins_search
 if [ $? -eq 0 ]
 then
 for plugins in $plugins_dir/$plugins_extension ; do
-grep -h 'function' $plugins_dir/$plugins_extension >$temp
-sed -i 's@function@@g' $temp
-sed -i 's@ @@g' $temp
-ls $plugins_dir/$plugins_extension >$temp2
-plugin_name=`cat "$temp2" | sed -n "$NR p"`
-function_name=`cat "$temp" | sed -n "$NR p"`
+grep -h 'function' $plugins_dir/$plugins_extension > ${temp[0]}
+sed -i 's@function@@g' ${temp[0]}
+sed -i 's@ @@g' ${temp[0]}
+ls $plugins_dir/$plugins_extension >${temp[2]}
+plugin_name=`cat "${temp[2]}" | sed -n "$NR p"`
+function_name=`cat "${temp[0]}" | sed -n "$NR p"`
 . $plugin_name
 $function_name
 NR=$[NR + 1]
 done
-rm -rf $temp;
-rm -rf $temp2;
+rm -rf ${temp[0]}
+rm -rf ${temp[2]}
 fi
 else
 mkdir -p $log_dir;
@@ -153,40 +120,40 @@ fi
 langpl()
 {
 if [ -e $app_dir/$app ] ; then
-if [ ! -e $app_dir/$pl ] ; then
-wget -q $kernelup_pl_url -O  $app_dir/$pl
+if [ ! -e $app_dir/${kernelup_lang_name[0]} ] ; then
+wget -q $kernelup_pl_url -O  $app_dir/${kernelup_lang_name[0]};
 fi
 else
-wget -q $kernelup_pl_url -O  $pl
+wget -q $kernelup_pl_url -O  ${kernelup_lang_name[0]};
 fi
 }
 
 langen()
 {
 if [ -e $app_dir/$app ] ; then
-if [ ! -e $app_dir/$en ] ; then
-wget -q $kernelup_en_url -O  $app_dir/$en
+if [ ! -e $app_dir/${kernelup_lang_name[1]} ] ; then
+wget -q $kernelup_en_url -O  $app_dir/${kernelup_lang_name[1]}
 fi
 else
-wget -q $kernelup_en_url -O  $en
+wget -q $kernelup_en_url -O  ${kernelup_lang_name[1]}
 fi
 }
 
 lang_init_pl()
 {
-if [ -e $app_dir/$pl ] ; then
-source $app_dir/$pl;
+if [ -e $app_dir/${kernelup_lang_name[0]} ] ; then
+source $app_dir/${kernelup_lang_name[0]};
 else
-source $pl;
+source ${kernelup_lang_name[0]};
 fi
 }
 
 lang_init_en()
 {
-if [ -e $app_dir/$en ] ; then
-source $app_dir/$en;
+if [ -e $app_dir/${kernelup_lang_name[1]} ] ; then
+source $app_dir/${kernelup_lang_name[1]};
 else
-source $en;
+source ${kernelup_lang_name[1]};
 fi
 }
 
@@ -232,17 +199,17 @@ fi
 
 test_connect()
 {
-ping -q -c1 $connect_test_url1 >$temp
+ping -q -c1 ${connect_test_url[0]} >${temp[0]}
 if [ "$?" -eq "2" ];
 then
-ping -q -c1 $connect_test_url2 >$temp
+ping -q -c1 ${connect_test_url[1]} >${temp[0]}
 if [ "$?" -eq "2" ];
 then
-ping -q -c1 $connect_test_url3 >$temp
+ping -q -c1 ${connect_test_url[2]} >${temp[0]}
 if [ "$?" -eq "2" ];
 then
 show_text 31 "$no_connect";
-rm -rf $temp;
+rm -rf ${temp[0]};
 exit;
 fi
 fi
@@ -296,7 +263,7 @@ fi
 reboot_notyfication()
 {
  if [ -f "/usr/bin/notify-send" ]; then
-notify-send "$app_name" "$reboot_now_com" -i $icon_path/$icon_name;
+notify-send "$app_name" "$reboot_now_com" -i $icon_path/${kernelup_file_name[0]};
     elif [ -f "/usr/bin/kdialog" ];then
 kdialog --title="$app_name" --msgbox="$reboot_now_com";
     elif [ -f "/usr/bin/zenity" ];then
@@ -307,7 +274,7 @@ zenity --info --title="$app_name" --text="$reboot_now_com";
 procedure_reboot()
 {
 if [ -e $log_dir ] ; then
-rm -rf $log_dir/$log_name_reboot;
+rm -rf $log_dir/${kernelup_log_name[1]};
 reboot_notyfication;
 show_text 31 "$ask_reboot";
 read answer;
@@ -315,12 +282,12 @@ default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 reboot;
 else
-touch $log_dir/$log_name_reboot;
+touch $log_dir/${kernelup_log_name[1]};
 exit;
 fi
 else
 mkdir -p $log_dir;
-touch $log_dir/$log_name_reboot;
+touch $log_dir/${kernelup_log_name[1]};
 exit;
 fi
 }
@@ -328,9 +295,9 @@ fi
 remove_old_kernel_init()
 {
 if [ -e $log_dir ] ; then
-if [ -e $log_dir/$log_name ] ; then
+if [ -e $log_dir/${kernelup_log_name[0]} ] ; then
 remove_old_kernel;
-rm -rf $log_dir/$log_name;
+rm -rf $log_dir/${kernelup_log_name[0]};
 fi
 else
 mkdir -p $log_dir;
@@ -340,7 +307,7 @@ fi
 reboot_init()
 {
 if [ -e $log_dir ] ; then
-if [ -e $log_dir/$log_name_reboot ] ; then
+if [ -e $log_dir/${kernelup_log_name[1]} ] ; then
 procedure_reboot;
 fi
 else
@@ -354,9 +321,9 @@ show_text 31 "$answer_remove";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-wget -q $remove_url -O $remove_name;
-chmod +x $remove_name;
-./$remove_name;
+wget -q $remove_url -O ${kernelup_file_name[3]};
+chmod +x ${kernelup_file_name[3]};
+./${kernelup_file_name[3]};
 exit;
 fi
 }
@@ -364,9 +331,9 @@ fi
 install_error()
 {
 print_text 31 "$install_wrong";
-wget -q $remove_url -O $remove_name;
-chmod +x $remove_name;
-./$remove_name;
+wget -q $remove_url -O ${kernelup_file_name[3]};
+chmod +x ${kernelup_file_name[3]};
+./${kernelup_file_name[3]};
 exit;
 }
 
@@ -385,27 +352,27 @@ cp $0 $app_dir/$app_name_male
 check_success_install;
 cp $app_name_male*.lang $app_dir
 check_success_install;
-wget -q $init_url -O $init_name;
+wget -q $init_url -O ${kernelup_file_name[1]};
 check_success_install;
-wget -q $desktop_url -O $desktop_name;
+wget -q $desktop_url -O ${kernelup_file_name[2]};
 check_success_install;
-wget -q $icon_url -O $icon_name;
+wget -q $icon_url -O ${kernelup_file_name[0]};
 check_success_install;
-wget -q $kernelup_run_url -O $kernelup_run_name;
+wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
 check_success_install;
-chmod +x $init_name;
+chmod +x ${kernelup_file_name[1]};
 check_success_install;
-chmod +x $kernelup_run_name;
+chmod +x ${kernelup_file_name[4]};
 check_success_install;
-mv $icon_name $icon_path;
+mv ${kernelup_file_name[0]} $icon_path;
 check_success_install;
-mv $init_name $app_dir;
+mv ${kernelup_file_name[1]} $app_dir;
 check_success_install;
-mv $kernelup_run_name $app_dir;
+mv ${kernelup_file_name[4]} $app_dir;
 check_success_install;
-cp $desktop_name $autostart_dir;
+cp ${kernelup_file_name[2]} $autostart_dir;
 check_success_install;
-mv $desktop_name $applications_path;
+mv ${kernelup_file_name[2]} $applications_path;
 check_success_install;
 add_chmod;
 check_success_install;
@@ -436,17 +403,17 @@ fi
 
 update()
 {
-wget --no-cache --no-dns-cache -q $version_url -O $url
-echo "$version" > $temp3
+wget --no-cache --no-dns-cache -q $version_url -O ${temp[5]}
+echo "$version" > ${temp[3]}
 
-cat $url|tr . , >$temp
-cat $temp3|tr . , >$temp2
+cat ${temp[5]}|tr . , >${temp[0]}
+cat ${temp[3]}|tr . , >${temp[2]}
 
-sed -i 's@,@@g' $temp
-sed -i 's@,@@g' $temp2
+sed -i 's@,@@g' ${temp[0]}
+sed -i 's@,@@g' ${temp[2]}
 
-ver7=`cat "$temp"`
-ver9=`cat "$temp2"`
+ver7=`cat "${temp[0]}"`
+ver9=`cat "${temp[2]}"`
 
 if [ $ver7 -eq $ver9 ]
     then
@@ -454,15 +421,15 @@ print_text 35 "=> $new_version"
 else
 print_text 37 "=> $download_new"
 
-wget -q $kernelup_up -O $up
+wget -q $kernelup_up -O ${temp[10]}
 
-chmod +x "$up"
+chmod +x "${temp[10]}"
 
-rm -rf $temp
-rm -rf $temp2
-rm -rf $temp3
-rm -rf $url
-./"$up"
+rm -rf ${temp[0]}
+rm -rf ${temp[2]}
+rm -rf ${temp[3]}
+rm -rf ${temp[5]}
+./"${temp[10]}"
 exit;
 fi
 }
@@ -470,7 +437,7 @@ fi
 notyfication()
 {
     if [ -f "/usr/bin/notify-send" ]; then
-notify-send "$app_name" "$found $you_kernel $latest_kernel_installed\n $new_version_kernel $latest_kernel_available\n $found1" -i $icon_path/$icon_name;
+notify-send "$app_name" "$found $you_kernel $latest_kernel_installed\n $new_version_kernel $latest_kernel_available\n $found1" -i $icon_path/${kernelup_file_name[0]};
     elif [ -f "/usr/bin/kdialog" ];then
 kdialog --title="$app_name" --msgbox="$found $you_kernel $latest_kernel_installed\n $new_version_kernel $latest_kernel_available\n $found1";
     elif [ -f "/usr/bin/zenity" ];then
@@ -485,15 +452,15 @@ cd $temp_dir;
 
 print_text 33 "=> $check_kernel";
 
-wget -q $ubuntu_url -O $temp3;
-sed -i 's@<a href="@ http://kernelup/@g' $temp3;
-sed -i 's@/">@ @g' $temp3;
-sed -i 's@[[:space:]]@\n@g' $temp3;
-sed -i '/^[ \t]*$/ d' $temp3;
-grep 'http://kernelup/v' $temp3 >$temp1;
-sed -i 's@http://kernelup/@@g' $temp1;
+wget -q $ubuntu_url -O ${temp[3]};
+sed -i 's@<a href="@ http://kernelup/@g' ${temp[3]};
+sed -i 's@/">@ @g' ${temp[3]};
+sed -i 's@[[:space:]]@\n@g' ${temp[3]};
+sed -i '/^[ \t]*$/ d' ${temp[3]};
+grep 'http://kernelup/v' ${temp[3]} >${temp[1]};
+sed -i 's@http://kernelup/@@g' ${temp[1]};
 
-latest_kernel_version=$(cat $temp1 | grep -v rc | tail -n 1);
+latest_kernel_version=$(cat ${temp[1]} | grep -v rc | tail -n 1);
 latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d "-" -f1 | tr -d v );
 if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
 
@@ -502,30 +469,33 @@ print_text 32 "=> $kernel_update";
 
 else
 
-mkdir -p $kat;
+mkdir -p ${temp[9]};
 
-wget -q $ubuntu_url/$latest_kernel_version -O $temp4;
+wget -q $ubuntu_url/$latest_kernel_version -O ${temp[4]};
 
-sed -i "s@lowlatency@~@g" $temp4;
-cat $temp4 | cut -d~ -f2-100 >$temp2;
-sed -i 's@<a href="linux@~~~linux@g' $temp2;
-sed -i 's@.deb">@.deb @g' $temp2;
-sed -i 's@<td>@ @g' $temp2;
-sed -i 's@[[:space:]]@\n@g' $temp2;
-grep '~~~linux' $temp2 >$temp4;
-sed -i 's@~~~@@g' $temp4;
-sed -i "s@^@$ubuntu_url/$latest_kernel_version/@g" $temp4;
-sed -i "s@http://@<program1>http://@g" $temp4;
-sed -i "s@_amd64.deb@_amd64.deb</program1>@g" $temp4;
-sed -i "s@_i386.deb@_i386.deb</program2>@g" $temp4;
-sed -i "s@_all.deb@_all.deb</program3>@g" $temp4;
-awk -vRS="</program1>" '{gsub(/.*<program1.*>/,"");print}' $temp4 > $x64;
-sed -i "s@<program1>@<program2>@g" $temp4;
-awk -vRS="</program2>" '{gsub(/.*<program2.*>/,"");print}' $temp4 > $x86;
-sed -i "s@<program2>@<program3>@g" $temp4;
-awk -vRS="</program3>" '{gsub(/.*<program3.*>/,"");print}' $temp4 > $xall;
+sed -i "s@lowlatency@~@g" ${temp[4]};
+cat ${temp[4]} | cut -d~ -f2-100 >${temp[2]};
+sed -i 's@<a href="linux@~~~linux@g' ${temp[2]};
+sed -i 's@.deb">@.deb @g' ${temp[2]};
+sed -i 's@<td>@ @g' ${temp[2]};
+sed -i 's@[[:space:]]@\n@g' ${temp[2]};
+grep '~~~linux' ${temp[2]} >${temp[4]};
+sed -i 's@~~~@@g' ${temp[4]};
+sed -i "s@^@$ubuntu_url/$latest_kernel_version/@g" ${temp[4]};
+sed -i "s@http://@<program1>http://@g" ${temp[4]};
+sed -i "s@_amd64.deb@_amd64.deb</program1>@g" ${temp[4]};
+sed -i "s@_i386.deb@_i386.deb</program2>@g" ${temp[4]};
+sed -i "s@_all.deb@_all.deb</program3>@g" ${temp[4]};
+awk -vRS="</program1>" '{gsub(/.*<program1.*>/,"");print}' ${temp[4]} > ${temp[6]};
+sed -i "s@<program1>@<program2>@g" ${temp[4]};
+awk -vRS="</program2>" '{gsub(/.*<program2.*>/,"");print}' ${temp[4]} > ${temp[7]};
+sed -i "s@<program2>@<program3>@g" ${temp[4]};
+awk -vRS="</program3>" '{gsub(/.*<program3.*>/,"");print}' ${temp[4]} > ${temp[8]};
 
+if [ "$1" = "1" ]
+then
 notyfication;
+fi
 
 print_text 33 "=> $you_kernel $latest_kernel_installed"
 print_text 35 "=> $new_version_kernel $latest_kernel_available"
@@ -540,31 +510,31 @@ read answer;
 default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
-data_clear
+rm -rf ${temp[*]};
 else
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
 refresh_system;
 
-for LINK in $(cat $x86); do
+for LINK in $(cat ${temp[7]}); do
 wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1]
 done;
 
-for LINK in $(cat $xall); do
+for LINK in $(cat ${temp[8]}); do
 wget -q "$LINK" -O kernel$NR.deb
-NR=$[NR + 1]
+NR=$[NR + 1];
 done;
 
-mv *.deb $kat
+mv *.deb ${temp[9]};
 
-cd $kat
+cd ${temp[9]};
 
 dpkg -i *.deb
 
 if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
-touch $log_dir/$log_name;
+touch $log_dir/${kernelup_log_name[0]};
 procedure_reboot;
 else
 print_text 31 "$instalation_error"
@@ -572,7 +542,7 @@ fi
 
 cd ..
 
-rm -rf $kat
+rm -rf ${temp[9]}
 
 fi
 
@@ -583,37 +553,37 @@ read answer;
 default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
-data_clear;
+rm -rf ${temp[*]};
 else
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
 refresh_system;
 
-for LINK in $(cat $x64); do
+for LINK in $(cat ${temp[6]}); do
 wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1]
 done;
 
-for LINK in $(cat $xall); do
+for LINK in $(cat ${temp[8]}); do
 wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1]
 done;
 
-mv *.deb $kat
+mv *.deb ${temp[9]}
 
-cd $kat
+cd ${temp[9]}
 
 dpkg -i *.deb
 
 if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
-touch $log_dir/$log_name;
+touch $log_dir/${kernelup_log_name[0]};
 procedure_reboot;
 else
 print_text 31 "$instalation_error"
 fi
 cd ..
-rm -rf $kat
+rm -rf ${temp[9]}
 fi
 else
 print_text 31 "=> $unsup_arch"
@@ -650,7 +620,7 @@ exit;;
    "--kernel_update"|"-k")
    echo -e "$app_name_styl";
    test_connect;
-   check_kernel_update;
+   check_kernel_update 1;
 exit;;
 "--remove"|"-r")
    check_security;
@@ -699,6 +669,6 @@ install_file 1;
 remove_old_kernel_init;
 reboot_init;
 load_plugins;
-check_kernel_update;
-data_clear;
+check_kernel_update 0;
+rm -rf ${temp[*]};
 echo -e "$name_author";
