@@ -57,4 +57,4 @@ run_app_gui="Uruchamianie programu"
 cancel_button="Anuluj"
 write_password="Wprowadź swoje hasło bądź naciśnij przycisk"
 wrong_password="Wprowadzono błędne hasło. \nOperacja anulowana!"
-
+reboot_system_zenity="Uruchomić ponownie komputer w celu dokończenia aktualizacji jądra?"
