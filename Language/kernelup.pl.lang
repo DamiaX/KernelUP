@@ -45,3 +45,16 @@ install_info="Zainstaluj program $app_name."
 kernel_search='Sprawdź czy nie pojawiła się nowa wersja jądra.'
 delete_old_kernel='Usuń stare wersje jądra w celu zwolnienia miejsca na dysku.'
 plugin_info="Zainstaluj dodatkowe pluginy do programu $app_name."
+#GUI
+option_yes="Tak"
+option_no="Nie"
+chose_text="Wybór"
+option_text="Opcja"
+update_kernel_on_gui_text="Rozpocząć instalację nowszej wersji kernela?"
+check_on_connect_text="Sprawdzanie połączenia z internetem..."
+end_text="Ukończono..."
+run_app_gui="Uruchamianie programu"
+cancel_button="Anuluj"
+write_password="Wprowadź swoje hasło bądź naciśnij przycisk"
+wrong_password="Wprowadzono błędne hasło. \nOperacja anulowana!"
+
