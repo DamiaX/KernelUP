@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.1";
+version="6.2";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -32,7 +32,9 @@ log_dir="$HOME/.KernelUP_data";
 plugins_dir="$log_dir/Plugins";
 plugins_extension="*.kernelup";
 plugins_search="kernelup";
+arg1="$1";
 arg2="$2";
+gui_shell=".kernelup_gui_shell.sh";
 
 refresh_system()
 {
@@ -197,6 +199,11 @@ if [ "$(id -u)" != "0" ]; then
 fi
 }
 
+zenity_no_connect()
+{
+zenity --window-icon="$icon_path/${kernelup_file_name[0]}" --error --text="$no_connect" --title="$app_name";		
+}
+
 test_connect()
 {
 ping -q -c1 ${connect_test_url[0]} >${temp[0]}
@@ -208,9 +215,16 @@ then
 ping -q -c1 ${connect_test_url[2]} >${temp[0]}
 if [ "$?" -eq "2" ];
 then
+if [ "$1" = "0" ]
+then
 show_text 31 "$no_connect";
 rm -rf ${temp[0]};
 exit;
+else
+zenity_no_connect;
+rm -rf ${temp[0]};
+exit;
+fi
 fi
 fi
 fi
@@ -245,19 +259,32 @@ show_text 31 "$install_plugin_error";
 fi 
 }
 
+remove_old_kernel_procedure()
+{
+apt-get remove -y --purge $(dpkg -l 'linux-image-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
+apt-get remove -y --purge $(dpkg -l 'linux-headers-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
+apt-get -y autoremove;
+apt-get -y autoclean;
+apt-get -y clean;
+update-grub;	
+}
+
 remove_old_kernel()
 {
 show_text 31 "$ask_remove";
 read answer;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
-apt-get remove -y --purge $(dpkg -l 'linux-image-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
-apt-get remove -y --purge $(dpkg -l 'linux-headers-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d');
-apt-get -y autoremove;
-apt-get -y autoclean;
-apt-get -y clean;
-update-grub;
+remove_old_kernel_procedure;
 fi
+}
+
+remove_old_kernel_zenity()
+{
+ans=$(zenity --title="$app_name" --window-icon="$icon_path/${kernelup_file_name[0]}" --list  --text "$ask_remove" --radiolist  --column "$chose_text" --column "$option_text" TRUE "$option_yes" FALSE "$option_no");
+if [ "$ans" = "$option_yes" ]; then		
+remove_old_kernel_procedure;
+fi	
 }
 
 reboot_notyfication()
@@ -283,6 +310,7 @@ if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; t
 reboot;
 else
 touch $log_dir/${kernelup_log_name[1]};
+echo -e "$name_author";
 exit;
 fi
 else
@@ -296,8 +324,14 @@ remove_old_kernel_init()
 {
 if [ -e $log_dir ] ; then
 if [ -e $log_dir/${kernelup_log_name[0]} ] ; then
+if [ "$1" = "0" ]
+then
 remove_old_kernel;
 rm -rf $log_dir/${kernelup_log_name[0]};
+else
+remove_old_kernel_zenity;
+rm -rf $log_dir/${kernelup_log_name[0]};
+fi
 fi
 else
 mkdir -p $log_dir;
@@ -445,6 +479,36 @@ zenity --info --title="$app_name" --text="$found $you_kernel $latest_kernel_inst
     fi
 }
 
+zenity_progress()
+{
+zenity --info --title="$app_name" --window-icon="$icon_path/${kernelup_file_name[0]}" --text="$change";
+}
+
+zenity_kernel_update()
+{
+zenity --info --title="$app_name" --window-icon="$icon_path/${kernelup_file_name[0]}" --text="$kernel_update";	
+}
+
+instalation_kernel_error_zenity()
+{
+rm -rf $temp_dir;
+rm -rf ${temp[*]};
+zenity --window-icon="$icon_path/${kernelup_file_name[0]}" --error --text="$instalation_error" --title="$app_name";	
+}
+
+reboot_zenity_notyfication()
+{
+quest=$(zenity --title="$app_name" --window-icon="$icon_path/${kernelup_file_name[0]}" --list  --text " $install_ok \n $reboot_system_zenity" --radiolist  --column "$chose_text" --column "$option_text" TRUE "$option_yes" FALSE "$option_no");
+if [ "$quest" = "$option_yes" ]; then
+rm -rf "$log_dir/${kernelup_log_name[1]}";
+rm -rf $temp_dir;
+rm -rf ${temp[*]};
+reboot;	
+fi
+rm -rf $temp_dir;
+rm -rf ${temp[*]};
+}
+
 check_kernel_update()
 {
 mkdir -p $temp_dir;
@@ -465,11 +529,20 @@ latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d
 if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
 
 if [ $latest_kernel_installed = $latest_kernel_available ] ; then
+
+if [ "$2" = "1" ]
+then
 print_text 32 "=> $kernel_update";
+else
+check_security;
+zenity_kernel_update;
+fi
 
 else
 
 mkdir -p ${temp[9]};
+
+cd ${temp[9]};
 
 wget -q $ubuntu_url/$latest_kernel_version -O ${temp[4]};
 
@@ -504,6 +577,9 @@ check_security;
 arch2=`uname -m`
 
 if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
+
+if [ "$2" = "1" ]
+then
 print_text 31 "$install_new_kernel"
 
 read answer;
@@ -511,7 +587,26 @@ default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
 rm -rf ${temp[*]};
+rm -rf $temp_dir;
+echo -e "$name_author";
+exit;
+fi
+
 else
+ans=$(zenity --title="$app_name" --window-icon="$icon_path/${kernelup_file_name[0]}" --list  --text " $found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available \n $update_kernel_on_gui_text" --radiolist  --column "$chose_text" --column "$option_text" TRUE "$option_yes" FALSE "$option_no");
+if [ "$ans" = "$option_no" ]; then		
+rm -rf ${temp[*]};
+rm -rf $temp_dir;
+echo -e "$name_author";
+exit;
+fi
+fi
+
+if [ "$2" = "0" ]
+then
+zenity_progress;
+fi
+
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
 refresh_system;
 
@@ -535,18 +630,27 @@ if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
 touch $log_dir/${kernelup_log_name[0]};
-procedure_reboot;
+if [ "$2" = "0" ]
+then
+reboot_zenity_notyfication;
+else
+procedure_reboot;	
+fi
+else
+	if [ "$2" = "0" ]
+then
+instalation_kernel_error_zenity;
 else
 print_text 31 "$instalation_error"
 fi
-
-cd ..
+fi
 
 rm -rf ${temp[9]}
 
-fi
-
 elif [ $arch2 = "x86_64" ]; then
+
+if [ "$2" = "1" ]
+then
 print_text 31 "$install_new_kernel"
 
 read answer;
@@ -554,7 +658,26 @@ default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
 rm -rf ${temp[*]};
+rm -rf $temp_dir;
+echo -e "$name_author";
+exit;
+fi
+
 else
+ans=$(zenity --title="$app_name" --window-icon="$icon_path/${kernelup_file_name[0]}" --list  --text " $found $you_kernel $latest_kernel_installed \n $new_version_kernel $latest_kernel_available \n $update_kernel_on_gui_text" --radiolist  --column "$chose_text" --column "$option_text" TRUE "$option_yes" FALSE "$option_no");
+if [ "$ans" = "$option_no" ]; then		
+rm -rf ${temp[*]};
+rm -rf $temp_dir;
+echo -e "$name_author";
+exit;
+fi
+fi
+
+if [ "$2" = "0" ]
+then
+zenity_progress;
+fi
+
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
 refresh_system;
 
@@ -575,22 +698,81 @@ cd ${temp[9]}
 dpkg -i *.deb
 
 if [ $? -eq 0 ]
-    then
+then	
 print_text 35 "=> $instalation_close"
 touch $log_dir/${kernelup_log_name[0]};
+if [ "$2" = "0" ]
+then
+reboot_zenity_notyfication;
+else
 procedure_reboot;
+fi
+
+else
+	if [ "$2" = "0" ]
+then
+instalation_kernel_error_zenity;
 else
 print_text 31 "$instalation_error"
 fi
-cd ..
-rm -rf ${temp[9]}
 fi
+
+rm -rf ${temp[9]}
 else
 print_text 31 "=> $unsup_arch"
 fi
 fi
 cd $actual_dir
 rm -rf $temp_dir
+}
+
+show_zenity_gui()
+{
+rm -rf "$gui_shell";
+(
+echo "# $search_old_kernel";
+remove_old_kernel_init 1;
+echo "20"; sleep 1
+echo "# $check_on_connect_text"; 
+echo "40"; sleep 1
+test_connect 1;
+echo "# $check_kernel" ;
+echo "80"; sleep 1
+check_kernel_update 0 0;
+echo "# $end_text" ;
+echo "100"; sleep 1
+rm -rf ${temp[*]};
+) |
+zenity --progress \
+  --window-icon="$icon_path/${kernelup_file_name[0]}" \
+  --title="$app_name" \
+  --text="$run_app_gui $app_name"	
+}
+
+zenity_gui()
+{
+zenity --window-icon="$icon_path/${kernelup_file_name[0]}" --entry  --title "$app_name" --text "$root_fail \n$write_password $cancel_button." --cancel-label="$cancel_button" --hide-text | sudo -S "./$gui_shell" && exit
+
+if [ $? != 0 ]
+then
+    zenity --error \
+    --title "$app_name" \
+    --text="$wrong_password"
+   exit;
+
+fi
+
+show_zenity_gui;
+}
+	
+check_zenity_gui()
+{
+if [ -f "/usr/bin/zenity" ];then
+echo "./beta_kernelup -ksi" > $gui_shell
+echo 'rm -rf $0' >> $gui_shell
+chmod +x $gui_shell
+zenity_gui;
+fi	
 }
 
 while [ "$1" ] ; do 
@@ -613,23 +795,23 @@ exit;;
 exit;;
    "--update"|"-u")
    check_security;
-   test_connect;
+   test_connect 0;
    echo -e "$app_name_styl"
    update; 
 exit;;
    "--kernel_update"|"-k")
    echo -e "$app_name_styl";
-   test_connect;
-   check_kernel_update 1;
+   test_connect 0;
+   check_kernel_update 1 1;
    rm -rf ${temp[*]};
 exit;;
 "--remove"|"-r")
    check_security;
-   test_connect;
+   test_connect 0;
    remove_app;
 exit;;
 "--plugin-installer"|"-pi")
-   test_connect;
+   test_connect 0;
    install_plugins;
 exit;;
 "--rkernel"|"-R")
@@ -638,7 +820,7 @@ exit;;
 exit;;
  "--install"|"-i")
    check_security;
-   test_connect;
+   test_connect 0;
    rm -rf "$app_dir/$app_name_male*";
    install_file 1;
 exit;;
@@ -650,6 +832,13 @@ exit;;
     check_security;
     install_file 0;
 exit;;
+ "--gui"|"-g")
+   check_zenity_gui;
+exit;;
+"--kernel_silent_install"|"-ksi")
+   show_zenity_gui;
+   rm -rf ${temp[*]};
+exit;;   
  "--author"|"-a")
    echo -e "$app_name_styl"
    echo -e "$name_author";
@@ -664,12 +853,13 @@ done
 clear;
 check_security;
 echo -e "$app_name_styl"
-test_connect;
+test_connect 0;
 update;
 install_file 1;
-remove_old_kernel_init;
+remove_old_kernel_init 0;
 reboot_init;
 load_plugins;
-check_kernel_update 0;
+check_kernel_update 0 1;
 rm -rf ${temp[*]};
+rm -rf $temp_dir;
 echo -e "$name_author";
