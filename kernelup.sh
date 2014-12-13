@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.3";
+version="6.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -14,11 +14,12 @@ kernelup_en_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Langua
 kernelup_up="https://raw.githubusercontent.com/DamiaX/kernelup/master/Core/up.sh"
 remove_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/remove.sh";
 desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup.desktop';
+kernelup_run_desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup.desktop';
 icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png';
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
 connect_test_url=(google.com facebook.com kernel.org);
 temp=(.kernel.temp .kernel1.temp .kernel2.temp .kernel3.temp .kernel4.temp .url.temp .x64.link .86.link .xall.link .install_katalog up.sh);
-kernelup_file_name=(kernelup.png kernelup-init kernelup-init.desktop remove.sh kernelup-run);
+kernelup_file_name=(kernelup.png kernelup-init kernelup-init.desktop remove.sh kernelup-run kernelup_run.desktop);
 kernelup_lang_name=(kernelup.pl.lang kernelup.en.lang);
 kernelup_log_name=(kernelup.klog kernelup_reboot.log);
 app_dir='/usr/local/sbin';
@@ -390,6 +391,8 @@ wget -q $init_url -O ${kernelup_file_name[1]};
 check_success_install;
 wget -q $desktop_url -O ${kernelup_file_name[2]};
 check_success_install;
+wget -q $kernelup_run_desktop_url -O ${kernelup_file_name[5]}; 
+check_success_install;
 wget -q $icon_url -O ${kernelup_file_name[0]};
 check_success_install;
 wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
@@ -404,7 +407,7 @@ mv ${kernelup_file_name[1]} $app_dir;
 check_success_install;
 mv ${kernelup_file_name[4]} $app_dir;
 check_success_install;
-cp ${kernelup_file_name[2]} $autostart_dir;
+mv ${kernelup_file_name[5]} $autostart_dir;
 check_success_install;
 mv ${kernelup_file_name[2]} $applications_path;
 check_success_install;
