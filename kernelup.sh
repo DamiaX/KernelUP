@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.5";
+version="6.6";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -14,7 +14,7 @@ kernelup_en_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Langua
 kernelup_up="https://raw.githubusercontent.com/DamiaX/kernelup/master/Core/up.sh"
 remove_url="https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/remove.sh";
 desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup.desktop';
-kernelup_run_desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup.desktop';
+kernelup_run_desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup_run.desktop';
 icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png';
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
 connect_test_url=(google.com facebook.com kernel.org);
