@@ -1,0 +1,7 @@
+[Desktop Entry]
+Categories=Application
+Exec=kernelup-run
+Terminal=false
+Type=Application
+StartupNotify=false
+X-GNOME-Autostart-enabled=true
