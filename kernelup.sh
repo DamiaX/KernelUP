@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.6";
+version="6.7";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -771,7 +771,7 @@ show_zenity_gui;
 check_zenity_gui()
 {
 if [ -f "/usr/bin/zenity" ];then
-echo "./beta_kernelup -ksi" > $gui_shell
+echo "kernelup -ksi" > $gui_shell
 echo 'rm -rf $0' >> $gui_shell
 chmod +x $gui_shell
 zenity_gui;
