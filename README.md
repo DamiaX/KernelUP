@@ -95,4 +95,6 @@ Method 2: Automatic installation<br>
 Author:<br>
 <blockquote>
 Damian Majchrzak (https://www.facebook.com/DamiaX).
+Support:<br>
+Powered by OREL Software (http://orelsoftware.tk/)
 </blockquote>
