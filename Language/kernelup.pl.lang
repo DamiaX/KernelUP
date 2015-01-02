@@ -2,7 +2,7 @@
 app_name='KernelUP'
 app_name_male='kernelup'
 app_name_styl="\E[33;1m[$app_name $version]\033[0m"
-root_fail='Program wymaga uprawnień roota.'
+root_fail='Program wymaga uprawnień administratora.'
 dist_fail='Niewspierana dystrybucja.'
 check_kernel='Sprawdzanie wersji zainstalowanego kernela...'
 kernel_update='Posiadasz aktualną wersje kernela!'
