@@ -45,6 +45,7 @@ install_info="Zainstaluj program $app_name."
 kernel_search='Sprawdź czy nie pojawiła się nowa wersja jądra.'
 delete_old_kernel='Usuń stare wersje jądra w celu zwolnienia miejsca na dysku.'
 plugin_info="Zainstaluj dodatkowe pluginy do programu $app_name."
+powered_by="Wspierane przez:"
 #GUI
 option_yes="Tak"
 option_no="Nie"
