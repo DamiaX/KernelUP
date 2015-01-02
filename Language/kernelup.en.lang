@@ -45,6 +45,7 @@ install_info="Install $app_name"
 kernel_search='Check for a new version of the kernel.'
 delete_old_kernel='Delete old versions of the kernel in order to free up disk space.'
 plugin_info="Install additional plugins for the program $app_name."
+powered_by="Powered by:"
 #GUI
 option_yes="Yes"
 option_no="No"
