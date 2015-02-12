@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.7";
+version="6.8";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -25,12 +25,15 @@ kernelup_log_name=(kernelup.klog kernelup_reboot.log);
 app_dir='/usr/local/sbin';
 icon_path='/usr/share/icons/hicolor/128x128/apps';
 applications_path='/usr/share/applications/';
+virtualbox_path='/usr/bin/VirtualBox';
+virtualbox_modules='/etc/init.d/vboxdrv setup';
 actual_dir="$(pwd)";
 temp_dir="$HOME/.kernelup_temp_dir";
 autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
 log_dir="$HOME/.KernelUP_data";
 plugins_dir="$log_dir/Plugins";
+virtualbox_extra_dir="$log_dir/VirtualBox";
 plugins_extension="*.kernelup";
 plugins_search="kernelup";
 arg1="$1";
@@ -438,6 +441,36 @@ install_app;
 fi
 }
 
+recompile_virtualbox_modules_run()
+{
+show_text 28 "$recompile_vb";
+read answer;
+default_answer;
+if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
+rm -rf $virtualbox_extra_dir;
+$virtualbox_modules;	
+fi
+}
+
+recompile_virtualbox_modules()
+{
+if [ "$1" = "0" ]
+then
+if [ -d $virtualbox_extra_dir ] ; then
+recompile_virtualbox_modules_run;
+fi
+else
+recompile_virtualbox_modules_run
+fi
+}
+
+find_virtualbox()
+{
+if [ -e $virtualbox_path ] ; then
+mkdir -p  $virtualbox_extra_dir;
+fi
+}
+
 update()
 {
 wget --no-cache --no-dns-cache -q $version_url -O ${temp[5]}
@@ -633,6 +666,7 @@ if [ $? -eq 0 ]
     then
 print_text 35 "=> $instalation_close"
 touch $log_dir/${kernelup_log_name[0]};
+find_virtualbox;
 if [ "$2" = "0" ]
 then
 reboot_zenity_notyfication;
@@ -704,6 +738,7 @@ if [ $? -eq 0 ]
 then	
 print_text 35 "=> $instalation_close"
 touch $log_dir/${kernelup_log_name[0]};
+find_virtualbox;
 if [ "$2" = "0" ]
 then
 reboot_zenity_notyfication;
@@ -789,8 +824,9 @@ case "$1" in
    echo "-r, --remove: $kernelup_remove";  
    echo "-R, --rkernel: $delete_old_kernel";
    echo "-i, --install: $install_info";
-   echo "-a, --author: $author_info"; 
    echo "-pi, --plugin-installer: $plugin_info"; 
+   echo "-rv --recompile-virtualbox: $virtualbox_info"; 
+   echo "-a, --author: $author_info"; 
 exit;;
    "--version"|"-v") 
    echo -e "$app_name_styl"
@@ -842,6 +878,10 @@ exit;;
    show_zenity_gui;
    rm -rf ${temp[*]};
 exit;;   
+"--recompile-virtualbox"|"-rv")
+    check_security;
+    recompile_virtualbox_modules 1;
+exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
    echo -e "$name_author";
@@ -859,6 +899,7 @@ echo -e "$app_name_styl"
 test_connect 0;
 update;
 install_file 1;
+recompile_virtualbox_modules 0;
 remove_old_kernel_init 0;
 reboot_init;
 load_plugins;
