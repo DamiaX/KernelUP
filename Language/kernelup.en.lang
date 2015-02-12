@@ -34,6 +34,7 @@ no_connect="No connection to the Internet. \nAborting."
 install_plugin_ok="You have successfully installed the plugin to the program $app_name."
 install_plugin_error='An error occurred during the installation of the plugin!'
 install_plugin_answer='Enter the Web address of the plugin to be installed:'
+recompile_vb="Rebuild VirtualBox modules for the new kernel? [Y/n]"
 #parameters
 help='View the content of help.'
 ver_info='Display the version of the program.'
