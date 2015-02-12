@@ -11,6 +11,7 @@ Features:<br>
 * The translations (Polish and English).<br>
 * Removing older versions of the kernel.<br>
 * System Plugin.<br>
+* Auto rebuild VirtualBox modules.<br>
 
 </blockquote>
 <hr>
