@@ -36,6 +36,8 @@ install_plugin_error='An error occurred during the installation of the plugin!'
 install_plugin_answer='Enter the Web address of the plugin to be installed:'
 recompile_vb="Rebuild VirtualBox modules for the new kernel? [Y/n]"
 virtualbox_info="Rebuild VirtualBox modules for the new kernel."
+answer_time="Enter a search frequency hours later version of the kernel." 
+time_empty="Search frequency newer kernel version has not been changed."
 #parameters
 help='View the content of help.'
 ver_info='Display the version of the program.'
@@ -48,6 +50,8 @@ kernel_search='Check for a new version of the kernel.'
 delete_old_kernel='Delete old versions of the kernel in order to free up disk space.'
 plugin_info="Install additional plugins for the program $app_name."
 powered_by="Powered by:"
+change_time="Change the search frequency newer version of the kernel."
+virtualbox_info="Rebuild VirtualBox modules for the new kernel."
 #GUI
 option_yes="Yes"
 option_no="No"
