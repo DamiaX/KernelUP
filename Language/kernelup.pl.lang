@@ -35,7 +35,7 @@ install_plugin_ok="Pomyślnie zainstalowano plugin do programu $app_name."
 install_plugin_error='Wystąpił błąd podczas instalacji pluginu!'
 install_plugin_answer='Podaj adres WWW pluginu do zainstalowania:'
 recompile_vb="Przebudować moduły programu VirtualBox pod nowy kernel? [T/n]"
-answer_time="Podajw godzinach częstotliwość wyszukiwania nowszej wersji jądra." 
+answer_time="Podaj w godzinach częstotliwość wyszukiwania nowszej wersji jądra." 
 time_empty="Częstotliwość wyszukiwania nowszej wersji jądra nie została zmieniona."
 #parameters
 help='Wyświetl treść pomocy.'
