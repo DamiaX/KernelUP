@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.8";
+version="6.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -813,6 +813,33 @@ zenity_gui;
 fi	
 }
 
+check_kernelup_setting()
+{
+if [ -z $time ] ; then
+echo $time_empty;
+exit;
+fi	
+}
+
+kernelup_setting()
+{
+echo $answer_time;
+read time;
+check_kernelup_setting;
+mn=$[ $time*3600 ] ;
+echo -n "#!/bin/bash
+#Copyright © 2014 Damian Majchrzak (DamiaX)
+#http://damiax.github.io/kernelup/
+rm -rf $HOME/.KernelUP_data/*.log;
+kernelup -k;
+for (( i=1; $i <= 2; )) ; do
+sleep $mn;
+kernelup -k;
+done;
+"> $app_dir/${kernelup_file_name[1]};
+chmod +x $app_dir/${kernelup_file_name[1]};
+}
+
 while [ "$1" ] ; do 
 case "$1" in
   "--help"|"-h") 
@@ -826,6 +853,7 @@ case "$1" in
    echo "-i, --install: $install_info";
    echo "-pi, --plugin-installer: $plugin_info"; 
    echo "-rv --recompile-virtualbox: $virtualbox_info"; 
+   echo "-ts --time-setting: $change_time"; 
    echo "-a, --author: $author_info"; 
 exit;;
    "--version"|"-v") 
@@ -881,6 +909,10 @@ exit;;
 "--recompile-virtualbox"|"-rv")
     check_security;
     recompile_virtualbox_modules 1;
+exit;;
+"--time-setting"|"-ts")
+    check_security;
+    kernelup_setting;
 exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
