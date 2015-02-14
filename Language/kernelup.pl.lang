@@ -35,7 +35,8 @@ install_plugin_ok="Pomyślnie zainstalowano plugin do programu $app_name."
 install_plugin_error='Wystąpił błąd podczas instalacji pluginu!'
 install_plugin_answer='Podaj adres WWW pluginu do zainstalowania:'
 recompile_vb="Przebudować moduły programu VirtualBox pod nowy kernel? [T/n]"
-virtualbox_info="Przebuduj moduły programu VirtualBox pod nowy kernel."
+answer_time="Podaj czas w godzinach częstotliwość wyszukiwania nowszej wersji jądra." 
+time_empty="Częstotliwość wyszukiwania nowszej wersji jądra nie została zmieniona."
 #parameters
 help='Wyświetl treść pomocy.'
 ver_info='Wyświetl wersję programu.'
@@ -49,7 +50,7 @@ delete_old_kernel='Usuń stare wersje jądra w celu zwolnienia miejsca na dysku.
 plugin_info="Zainstaluj dodatkowe pluginy do programu $app_name."
 powered_by="Wspierane przez:"
 change_time="Zmień częstotliwość wyszukiwania nowszej wersji jądra."
-answer_time="Podaj czas w godzinach częstotliwość wyszukiwania nowszej wersji jądra." 
+virtualbox_info="Przebuduj moduły programu VirtualBox pod nowy kernel."
 #GUI
 option_yes="Tak"
 option_no="Nie"
