@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#Copyright © 2014 Damian Majchrzak (DamiaX)
+#Copyright © 2015 Damian Majchrzak (DamiaX)
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="6.9";
+version="7.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -826,9 +826,10 @@ kernelup_setting()
 echo $answer_time;
 read time;
 check_kernelup_setting;
+if [ $time -eq $time 2> /dev/null ]; then
 mn=$[ $time*3600 ] ;
 echo -n "#!/bin/bash
-#Copyright © 2014 Damian Majchrzak (DamiaX)
+#Copyright © 2015 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 rm -rf $HOME/.KernelUP_data/*.log;
 kernelup -k;
@@ -838,6 +839,10 @@ kernelup -k;
 done;
 "> $app_dir/${kernelup_file_name[1]};
 chmod +x $app_dir/${kernelup_file_name[1]};
+else
+echo $time_empty;
+exit;
+fi
 }
 
 while [ "$1" ] ; do 
