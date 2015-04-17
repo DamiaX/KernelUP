@@ -1,4 +1,4 @@
-#Copyright © 2014 Damian Majchrzak (DamiaX)
+#Copyright © 2015 Damian Majchrzak (DamiaX)
 app_name='KernelUP'
 app_name_male='kernelup'
 app_name_styl="\E[33;1m[$app_name $version]\033[0m"
