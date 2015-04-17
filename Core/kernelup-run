@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Copyright © 2014 Damian Majchrzak (DamiaX)
+#Copyright © 2015 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
 temp=".temp";
