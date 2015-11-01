@@ -12,6 +12,7 @@ Features:<br>
 * Removing older versions of the kernel.<br>
 * System Plugin.<br>
 * Auto rebuild VirtualBox modules.<br>
+* Automatically install updates.<br>
 
 </blockquote>
 <hr>
