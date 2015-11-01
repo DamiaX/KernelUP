@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.0";
+version="7.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -17,11 +17,13 @@ desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kerne
 kernelup_run_desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup_run.desktop';
 icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png';
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
+crypt_module='https://github.com/DamiaX/Crypt-decrypt/raw/master/crypt';
+decrypt_module='https://github.com/DamiaX/Crypt-decrypt/raw/master/decyprt';
 connect_test_url=(google.com facebook.com kernel.org);
 temp=(.kernel.temp .kernel1.temp .kernel2.temp .kernel3.temp .kernel4.temp .url.temp .x64.link .86.link .xall.link .install_katalog up.sh);
-kernelup_file_name=(kernelup.png kernelup-init kernelup.desktop remove.sh kernelup-run kernelup-run.desktop);
+kernelup_file_name=(kernelup.png kernelup-init kernelup.desktop remove.sh kernelup-run kernelup-run.desktop kernelup_pass kernelup_show);
 kernelup_lang_name=(kernelup.pl.lang kernelup.en.lang);
-kernelup_log_name=(kernelup.klog kernelup_reboot.log);
+kernelup_log_name=(kernelup.klog kernelup_reboot.log kernelup_automat.setting kernelup_password.pass);
 app_dir='/usr/local/sbin';
 icon_path='/usr/share/icons/hicolor/128x128/apps';
 applications_path='/usr/share/applications/';
@@ -39,6 +41,7 @@ plugins_search="kernelup";
 arg1="$1";
 arg2="$2";
 gui_shell=".kernelup_gui_shell.sh";
+arch2=`uname -m`;
 
 refresh_system()
 {
@@ -197,9 +200,24 @@ if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" &&
    exit;
 fi
 
+
 if [ "$(id -u)" != "0" ]; then
-   show_text 31 "$root_fail" 1>&2
-   exit;
+if [ -e "$log_dir/${kernelup_log_name[3]}" ] ; then
+pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
+pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
+echo "$pass_s" | sudo -S $0;
+exit;
+else
+show_text 31 "$how_password";
+read -s password;
+if [ ! -e $log_dir ] ; then
+mkdir $log_dir;
+else
+"$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
+cat "$log_dir/${kernelup_log_name[3]}" | sudo -S $0;
+exit;
+fi
+fi
 fi
 }
 
@@ -400,6 +418,20 @@ wget -q $icon_url -O ${kernelup_file_name[0]};
 check_success_install;
 wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
 check_success_install;
+
+wget $crypt_module -O ${kernelup_file_name[6]};
+check_success_install;
+chmod +x ${kernelup_file_name[6]};
+check_success_install;
+mv ${kernelup_file_name[6]} $app_dir;
+check_success_install;
+wget $decrypt_module -O ${kernelup_file_name[7]};
+check_success_install;
+chmod +x ${kernelup_file_name[7]};
+check_success_install;
+mv ${kernelup_file_name[7]} $app_dir;
+check_success_install;
+
 chmod +x ${kernelup_file_name[1]};
 check_success_install;
 chmod +x ${kernelup_file_name[4]};
@@ -420,7 +452,7 @@ check_success_install;
 if [ $? -eq 0 ]
     then
 print_text 33 "=> $install_ok";
-echo -e "\E[37;1m=> $run\033[0m" "\E[35;1msudo $app_name_male\033[0m";
+echo -e "\E[37;1m=> $run\033[0m" "\E[35;1m $app_name_male\033[0m";
 fi
 }
 
@@ -545,13 +577,8 @@ rm -rf $temp_dir;
 rm -rf ${temp[*]};
 }
 
-check_kernel_update()
+parse_link()
 {
-mkdir -p $temp_dir;
-cd $temp_dir;
-
-print_text 33 "=> $check_kernel";
-
 wget -q $ubuntu_url -O ${temp[3]};
 sed -i 's@<a href="@ http://kernelup/@g' ${temp[3]};
 sed -i 's@/">@ @g' ${temp[3]};
@@ -559,29 +586,11 @@ sed -i 's@[[:space:]]@\n@g' ${temp[3]};
 sed -i '/^[ \t]*$/ d' ${temp[3]};
 grep 'http://kernelup/v' ${temp[3]} >${temp[1]};
 sed -i 's@http://kernelup/@@g' ${temp[1]};
+}
 
-latest_kernel_version=$(cat ${temp[1]} | grep -v rc | tail -n 1);
-latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d "-" -f1 | tr -d v );
-if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
-
-if [ $latest_kernel_installed = $latest_kernel_available ] ; then
-
-if [ "$2" = "1" ]
-then
-print_text 32 "=> $kernel_update";
-else
-check_security;
-zenity_kernel_update;
-fi
-
-else
-
-mkdir -p ${temp[9]};
-
-cd ${temp[9]};
-
+create_download_link()
+{
 wget -q $ubuntu_url/$latest_kernel_version -O ${temp[4]};
-
 sed -i "s@lowlatency@~@g" ${temp[4]};
 cat ${temp[4]} | cut -d~ -f2-100 >${temp[2]};
 sed -i 's@<a href="linux@~~~linux@g' ${temp[2]};
@@ -600,6 +609,117 @@ sed -i "s@<program1>@<program2>@g" ${temp[4]};
 awk -vRS="</program2>" '{gsub(/.*<program2.*>/,"");print}' ${temp[4]} > ${temp[7]};
 sed -i "s@<program2>@<program3>@g" ${temp[4]};
 awk -vRS="</program3>" '{gsub(/.*<program3.*>/,"");print}' ${temp[4]} > ${temp[8]};
+}
+
+
+install_x86()
+{
+refresh_system;
+
+for LINK in $(cat ${temp[7]}); do
+wget -q "$LINK" -O kernel$NR.deb
+NR=$[NR + 1]
+done;
+
+for LINK in $(cat ${temp[8]}); do
+wget -q "$LINK" -O kernel$NR.deb
+NR=$[NR + 1];
+done;
+
+mv *.deb ${temp[9]};
+cd ${temp[9]};
+dpkg -i *.deb
+}
+
+install_x86_64()
+{
+refresh_system;
+
+for LINK in $(cat ${temp[6]}); do
+wget -q "$LINK" -O kernel$NR.deb
+NR=$[NR + 1]
+done;
+
+for LINK in $(cat ${temp[8]}); do
+wget -q "$LINK" -O kernel$NR.deb
+NR=$[NR + 1];
+done;
+
+mv *.deb ${temp[9]};
+
+cd ${temp[9]};
+
+dpkg -i *.deb
+}
+
+check_version_kernel_installed()
+{
+latest_kernel_version=$(cat ${temp[1]} | grep -v rc | tail -n 1);
+latest_kernel_available=$(echo $latest_kernel_version | cut -d "/" -f 6 | cut -d "-" -f1 | tr -d v );
+if [ -z $(echo $latest_kernel_available | cut -d "." -f3) ] ; then latest_kernel_available=${latest_kernel_available}.0; fi
+}
+
+chose_dir()
+{
+mkdir -p $temp_dir;
+cd $temp_dir;
+}
+
+create_download_dir()
+{
+mkdir -p ${temp[9]};
+cd ${temp[9]};
+}
+
+reboot_communicat_now()
+{
+if [ $? -eq 0 ]
+    then
+reboot_notyfication;
+fi
+}
+
+information_install()
+{
+if [ $? -eq 0 ]
+    then
+print_text 35 "=> $instalation_close"
+touch $log_dir/${kernelup_log_name[0]};
+find_virtualbox;
+if [ "$2" = "0" ]
+then
+reboot_zenity_notyfication;
+else
+procedure_reboot;	
+fi
+else
+	if [ "$2" = "0" ]
+then
+instalation_kernel_error_zenity;
+else
+print_text 31 "$instalation_error"
+fi
+fi
+rm -rf ${temp[9]}
+}
+
+check_kernel_update()
+{
+chose_dir;
+print_text 33 "=> $check_kernel";
+parse_link;
+check_version_kernel_installed;
+if [ $latest_kernel_installed = $latest_kernel_available ] ; then
+if [ "$2" = "1" ]
+then
+print_text 32 "=> $kernel_update";
+else
+check_security;
+zenity_kernel_update;
+fi
+else
+create_download_dir;
+create_download_link;
 
 if [ "$1" = "1" ]
 then
@@ -609,8 +729,6 @@ fi
 print_text 33 "=> $you_kernel $latest_kernel_installed"
 print_text 35 "=> $new_version_kernel $latest_kernel_available"
 check_security;
-
-arch2=`uname -m`
 
 if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
 
@@ -644,45 +762,10 @@ zenity_progress;
 fi
 
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
-refresh_system;
 
-for LINK in $(cat ${temp[7]}); do
-wget -q "$LINK" -O kernel$NR.deb
-NR=$[NR + 1]
-done;
+install_x86;
 
-for LINK in $(cat ${temp[8]}); do
-wget -q "$LINK" -O kernel$NR.deb
-NR=$[NR + 1];
-done;
-
-mv *.deb ${temp[9]};
-
-cd ${temp[9]};
-
-dpkg -i *.deb
-
-if [ $? -eq 0 ]
-    then
-print_text 35 "=> $instalation_close"
-touch $log_dir/${kernelup_log_name[0]};
-find_virtualbox;
-if [ "$2" = "0" ]
-then
-reboot_zenity_notyfication;
-else
-procedure_reboot;	
-fi
-else
-	if [ "$2" = "0" ]
-then
-instalation_kernel_error_zenity;
-else
-print_text 31 "$instalation_error"
-fi
-fi
-
-rm -rf ${temp[9]}
+information_install;
 
 elif [ $arch2 = "x86_64" ]; then
 
@@ -716,46 +799,39 @@ zenity_progress;
 fi
 
 print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
-refresh_system;
 
-for LINK in $(cat ${temp[6]}); do
-wget -q "$LINK" -O kernel$NR.deb
-NR=$[NR + 1]
-done;
-
-for LINK in $(cat ${temp[8]}); do
-wget -q "$LINK" -O kernel$NR.deb
-NR=$[NR + 1]
-done;
-
-mv *.deb ${temp[9]}
-
-cd ${temp[9]}
-
-dpkg -i *.deb
-
-if [ $? -eq 0 ]
-then	
-print_text 35 "=> $instalation_close"
-touch $log_dir/${kernelup_log_name[0]};
-find_virtualbox;
-if [ "$2" = "0" ]
-then
-reboot_zenity_notyfication;
-else
-procedure_reboot;
-fi
+install_x86_64;
+information_install;
 
 else
-	if [ "$2" = "0" ]
-then
-instalation_kernel_error_zenity;
-else
-print_text 31 "$instalation_error"
+print_text 31 "=> $unsup_arch"
 fi
 fi
+cd $actual_dir
+rm -rf $temp_dir
+}
 
-rm -rf ${temp[9]}
+automated_update()
+{
+check_security;
+chose_dir;
+parse_link;
+check_version_kernel_installed;
+if [ $latest_kernel_installed != $latest_kernel_available ] ; then
+create_download_dir;
+create_download_link;
+if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
+install_x86;
+information_install;
+reboot_communicat_now;
+
+elif [ $arch2 = "x86_64" ]; then
+
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
+install_x86_64;
+information_install;
+reboot_communicat_now;
 else
 print_text 31 "=> $unsup_arch"
 fi
@@ -845,6 +921,32 @@ exit;
 fi
 }
 
+create_file_setting()
+{
+show_text 31 "$auto_update";
+read answer;
+default_answer;
+if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
+echo "1" > $log_dir/${kernelup_log_name[2]};
+else
+rm -rf $log_dir/${kernelup_log_name[2]};
+fi
+}
+
+manual_automated()
+{
+if [ -e $log_dir ] ; then
+if [ -e $log_dir/${kernelup_log_name[2]} ] ; then
+test_connect 0;
+automated_update;
+else
+check_kernel_update 0 1;
+fi
+else
+check_kernel_update 0 1;
+fi
+}
+
 while [ "$1" ] ; do 
 case "$1" in
   "--help"|"-h") 
@@ -858,7 +960,8 @@ case "$1" in
    echo "-i, --install: $install_info";
    echo "-pi, --plugin-installer: $plugin_info"; 
    echo "-rv --recompile-virtualbox: $virtualbox_info"; 
-   echo "-ts --time-setting: $change_time"; 
+   echo "-ts --time-setting: $change_time";
+   echo "-ad --automated: $auto_info";
    echo "-a, --author: $author_info"; 
 exit;;
    "--version"|"-v") 
@@ -902,6 +1005,7 @@ exit;;
 exit;;
  "--install_update"|"-iu")
     check_security;
+    test_connect 0;
     install_file 0;
 exit;;
  "--gui"|"-g")
@@ -918,6 +1022,9 @@ exit;;
 "--time-setting"|"-ts")
     check_security;
     kernelup_setting;
+exit;;
+"--automated"|"-ad")
+   create_file_setting;
 exit;;
  "--author"|"-a")
    echo -e "$app_name_styl"
@@ -940,7 +1047,7 @@ recompile_virtualbox_modules 0;
 remove_old_kernel_init 0;
 reboot_init;
 load_plugins;
-check_kernel_update 0 1;
+manual_automated;
 rm -rf ${temp[*]};
 rm -rf $temp_dir;
 echo -e "$name_author";
