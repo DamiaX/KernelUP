@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.2";
+version="7.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -214,7 +214,9 @@ if [ ! -e $log_dir ] ; then
 mkdir $log_dir;
 else
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
-cat "$log_dir/${kernelup_log_name[3]}" | sudo -S $0;
+pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
+pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
+echo "$pass_s" | sudo -S $0;
 exit;
 fi
 fi
