@@ -205,7 +205,7 @@ if [ "$(id -u)" != "0" ]; then
 if [ -e "$log_dir/${kernelup_log_name[3]}" ] ; then
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
-echo "$pass_s" | sudo -S $0;
+echo "$pass_s" | sudo -S $0 $1;
 exit;
 else
 show_text 31 "$how_password";
@@ -216,7 +216,7 @@ else
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
-echo "$pass_s" | sudo -S $0;
+echo "$pass_s" | sudo -S $0 $1;
 exit;
 fi
 fi
