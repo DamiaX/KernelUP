@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.5";
+version="7.6";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -433,13 +433,13 @@ check_success_install;
 wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
 check_success_install;
 
-wget $crypt_module -O ${kernelup_file_name[6]};
+wget -q $crypt_module -O ${kernelup_file_name[6]};
 check_success_install;
 chmod +x ${kernelup_file_name[6]};
 check_success_install;
 mv ${kernelup_file_name[6]} $app_dir;
 check_success_install;
-wget $decrypt_module -O ${kernelup_file_name[7]};
+wget -q $decrypt_module -O ${kernelup_file_name[7]};
 check_success_install;
 chmod +x ${kernelup_file_name[7]};
 check_success_install;
@@ -626,7 +626,6 @@ awk -vRS="</program2>" '{gsub(/.*<program2.*>/,"");print}' ${temp[4]} > ${temp[7
 sed -i "s@<program2>@<program3>@g" ${temp[4]};
 awk -vRS="</program3>" '{gsub(/.*<program3.*>/,"");print}' ${temp[4]} > ${temp[8]};
 }
-
 
 install_x86()
 {
