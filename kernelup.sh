@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.4";
+version="7.5";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -606,6 +606,8 @@ create_download_link()
 {
 wget -q $ubuntu_url/$latest_kernel_version -O ${temp[4]};
 sed -i "s@lowlatency@~@g" ${temp[4]};
+sed -i "s@_armhf.deb@~@g" ${temp[4]};
+sed -i "s@_ppc64el.deb@~@g" ${temp[4]};
 cat ${temp[4]} | cut -d~ -f2-100 >${temp[2]};
 sed -i 's@<a href="linux@~~~linux@g' ${temp[2]};
 sed -i 's@.deb">@.deb @g' ${temp[2]};
