@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.9";
+version="8.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -789,7 +789,7 @@ then
 print_text 31 "$install_new_kernel"
 read answer < $term; 
 default_answer;
-answer="n"
+
 if [[ $answer == "N" || $answer == "n" ]]; then
 rm -rf ${temp[*]};
 rm -rf $temp_dir;
