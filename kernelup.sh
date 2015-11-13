@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.0";
+version="8.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -954,9 +954,11 @@ if [ -e $log_dir/${kernelup_log_name[2]} ] ; then
 test_connect 0;
 automated_update;
 else
+test_connect 0;
 check_kernel_update 0 1;
 fi
 else
+test_connect 0;
 check_kernel_update 0 1;
 fi
 }
@@ -989,7 +991,7 @@ exit;;
    update; 
 exit;;
    "--kernel_update"|"-k")
-   echo -e "$app_name_styl";
+   check_security;
    test_connect 0;
    check_kernel_update 1 1;
    rm -rf ${temp[*]};
