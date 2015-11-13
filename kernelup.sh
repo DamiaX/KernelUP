@@ -4,7 +4,13 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.6";
+	##############################################
+	## TO DO:                                   ##       
+	## Przebudować default_answer na argumenty. ##
+	## Zrobić może procedure end_communicat...  ##
+	##############################################
+
+version="7.7";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -42,6 +48,7 @@ arg1="$1";
 arg2="$2";
 gui_shell=".kernelup_gui_shell.sh";
 arch2=`uname -m`;
+term="/dev/tty";
 
 refresh_system()
 {
@@ -209,26 +216,37 @@ if [ "$(id -u)" != "0" ]; then
    exit;
 fi
 }
+
+function run()
+{
+ $* | sudo -S sh -c "$0"
+}
+
 check_security_new()
 {
 check_distro;
 
 if [ "$(id -u)" != "0" ]; then
+
 if [ -e "$log_dir/${kernelup_log_name[3]}" ] ; then
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
-echo "$pass_s" | sudo -S $0;
+abc=" echo $pass_s | sudo -S $0"
+run "$pass_s";
+ 
 exit;
+
+
 else
 show_text 31 "$how_password";
-read -s password;
+read -s password < $term ;
 if [ ! -e $log_dir ] ; then
 mkdir $log_dir;
 else
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
-echo "$pass_s" | sudo -S $0;
+"$pass_s" | sudo -S $0;
 exit;
 fi
 fi
@@ -279,7 +297,7 @@ install_plugins()
 {
 if [ -z "$arg2" ] ; then
 show_text 31 "$install_plugin_answer";
-read adres;
+read adres < $term ;
 wget -q --no-cache $adres -O $plugins_dir/$RANDOM.kernelup;
 check_install_plugin;
 else
@@ -308,7 +326,7 @@ update-grub;
 remove_old_kernel()
 {
 show_text 31 "$ask_remove";
-read answer;
+read answer < $term;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 remove_old_kernel_procedure;
@@ -340,7 +358,7 @@ if [ -e $log_dir ] ; then
 rm -rf $log_dir/${kernelup_log_name[1]};
 reboot_notyfication;
 show_text 31 "$ask_reboot";
-read answer;
+read answer < $term;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 reboot;
@@ -388,7 +406,7 @@ fi
 remove_app()
 {
 show_text 31 "$answer_remove";
-read answer;
+read answer < $term;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 wget -q $remove_url -O ${kernelup_file_name[3]};
@@ -466,7 +484,7 @@ check_success_install;
 if [ $? -eq 0 ]
     then
 print_text 33 "=> $install_ok";
-echo -e "\E[37;1m=> $run\033[0m" "\E[35;1m $app_name_male\033[0m";
+echo -e "\E[37;1m=> $run\033[0m" "\E[35;1m$app_name_male\033[0m";
 fi
 }
 
@@ -476,7 +494,7 @@ if [ "$1" = "1" ]
 then
 if [ ! -e $app_dir/$app_name_male ] ; then
 show_text 31 "=> $install_file";
-read answer;
+read answer < $term;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 install_app;
@@ -490,7 +508,7 @@ fi
 recompile_virtualbox_modules_run()
 {
 show_text 28 "$recompile_vb";
-read answer;
+read answer < $term;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 rm -rf $virtualbox_extra_dir;
@@ -751,7 +769,7 @@ if [ "$2" = "1" ]
 then
 print_text 31 "$install_new_kernel"
 
-read answer;
+read answer < $term;
 default_answer;
 
 if [[ $answer == "N" || $answer == "n" ]]; then
@@ -776,7 +794,7 @@ then
 zenity_progress;
 fi
 
-print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture $arch2";
 
 install_x86;
 
@@ -787,10 +805,9 @@ elif [ $arch2 = "x86_64" ]; then
 if [ "$2" = "1" ]
 then
 print_text 31 "$install_new_kernel"
-
-read answer;
+read answer < $term; 
 default_answer;
-
+answer="n"
 if [[ $answer == "N" || $answer == "n" ]]; then
 rm -rf ${temp[*]};
 rm -rf $temp_dir;
@@ -813,7 +830,7 @@ then
 zenity_progress;
 fi
 
-print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture $arch2";
 
 install_x86_64;
 information_install;
@@ -836,14 +853,14 @@ if [ $latest_kernel_installed != $latest_kernel_available ] ; then
 create_download_dir;
 create_download_link;
 if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
-print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86";
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture $arch2";
 install_x86;
 information_install;
 reboot_communicat_now;
 
 elif [ $arch2 = "x86_64" ]; then
 
-print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture x86_64";
+print_text 32 "$install_kernel_version $latest_kernel_available $for_architecture $arch2";
 install_x86_64;
 information_install;
 reboot_communicat_now;
@@ -915,7 +932,7 @@ fi
 kernelup_setting()
 {
 echo $answer_time;
-read time;
+read time < $term;
 check_kernelup_setting;
 if [ $time -eq $time 2> /dev/null ]; then
 mn=$[ $time*3600 ] ;
@@ -939,7 +956,7 @@ fi
 create_file_setting()
 {
 show_text 31 "$auto_update";
-read answer;
+read answer < $term;
 default_answer;
 if [[ $answer == "T" || $answer == "t" || $answer == "y" || $answer == "Y" ]]; then
 echo "1" > $log_dir/${kernelup_log_name[2]};
@@ -952,7 +969,7 @@ manual_automated()
 {
 if [ -e $log_dir ] ; then
 if [ -e $log_dir/${kernelup_log_name[2]} ] ; then
-test_connect 0;
+#test_connect 0;
 automated_update;
 else
 check_kernel_update 0 1;
