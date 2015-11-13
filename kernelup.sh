@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="7.8";
+version="7.9";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -202,21 +202,12 @@ if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" &&
 fi
 }
 
-check_security()
-{
-check_distro;
-if [ "$(id -u)" != "0" ]; then
-   show_text 31 "$root_fail" 1>&2
-   exit;
-fi
-}
-
 function run()
 {
- echo "$*" | sudo -S sh -c "$0"
+ echo "$*" | sudo -S sh -c "$0 $arg1";
 }
 
-check_security_new()
+check_security()
 {
 check_distro;
 
@@ -738,7 +729,7 @@ if [ "$2" = "1" ]
 then
 print_text 32 "=> $kernel_update";
 else
-check_security_new;
+check_security;
 zenity_kernel_update;
 fi
 else
@@ -752,7 +743,7 @@ fi
 
 print_text 33 "=> $you_kernel $latest_kernel_installed"
 print_text 35 "=> $new_version_kernel $latest_kernel_available"
-check_security_new;
+check_security;
 
 if  [ $arch2 = i686 ] || [ $arch2 = i386 ] || [ $arch2 = x86 ]; then
 
@@ -836,7 +827,7 @@ rm -rf $temp_dir
 
 automated_update()
 {
-check_security_new;
+check_security;
 chose_dir;
 parse_link;
 check_version_kernel_installed;
@@ -1062,7 +1053,7 @@ exit;;
 done
 
 clear;
-check_security_new;
+check_security;
 echo -e "$app_name_styl"
 test_connect 0;
 update;
