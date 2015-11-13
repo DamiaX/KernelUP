@@ -4,13 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-	##############################################
-	## TO DO:                                   ##       
-	## Przebudować default_answer na argumenty. ##
-	## Zrobić może procedure end_communicat...  ##
-	##############################################
-
-version="7.7";
+version="7.8";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -219,7 +213,7 @@ fi
 
 function run()
 {
- $* | sudo -S sh -c "$0"
+ echo "$*" | sudo -S sh -c "$0"
 }
 
 check_security_new()
@@ -227,26 +221,23 @@ check_security_new()
 check_distro;
 
 if [ "$(id -u)" != "0" ]; then
-
 if [ -e "$log_dir/${kernelup_log_name[3]}" ] ; then
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
-abc=" echo $pass_s | sudo -S $0"
 run "$pass_s";
- 
 exit;
-
 
 else
 show_text 31 "$how_password";
 read -s password < $term ;
 if [ ! -e $log_dir ] ; then
 mkdir $log_dir;
+
 else
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
-"$pass_s" | sudo -S $0;
+run "$pass_s";
 exit;
 fi
 fi
@@ -969,7 +960,7 @@ manual_automated()
 {
 if [ -e $log_dir ] ; then
 if [ -e $log_dir/${kernelup_log_name[2]} ] ; then
-#test_connect 0;
+test_connect 0;
 automated_update;
 else
 check_kernel_update 0 1;
