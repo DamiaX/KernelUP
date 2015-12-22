@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.2";
+version="8.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -641,9 +641,12 @@ wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1];
 done;
 
+mkdir ${temp[9]};
 mv *.deb ${temp[9]};
 cd ${temp[9]};
-dpkg -i *.deb
+dpkg -i *.deb;
+cd $actual_dir;
+rm -rf ${temp[9]};
 }
 
 install_x86_64()
@@ -660,11 +663,12 @@ wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1];
 done;
 
+mkdir ${temp[9]};
 mv *.deb ${temp[9]};
-
 cd ${temp[9]};
-
 dpkg -i *.deb
+cd $actual_dir;
+rm -rf ${temp[9]};
 }
 
 check_version_kernel_installed()
