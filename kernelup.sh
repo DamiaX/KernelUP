@@ -1,10 +1,10 @@
 #!/bin/bash
 
-#Copyright © 2015 Damian Majchrzak (DamiaX)
+#Copyright © 2016 Damian Majchrzak (DamiaX)
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.3";
+version="8.4";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -545,7 +545,7 @@ rm -rf ${temp[0]}
 rm -rf ${temp[2]}
 rm -rf ${temp[3]}
 rm -rf ${temp[5]}
-./"${temp[10]}"
+./"${temp[10]}" $0
 exit;
 fi
 }
