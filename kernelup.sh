@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.4";
+version="8.5";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -212,6 +212,14 @@ check_security()
 check_distro;
 
 if [ "$(id -u)" != "0" ]; then
+
+if [ ! -e  "$app_dir/${kernelup_file_name[6]}" ] ;
+then
+show_text 31 "$root_fail";
+exit;
+
+else
+
 if [ -e "$log_dir/${kernelup_log_name[3]}" ] ; then
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
@@ -219,17 +227,20 @@ run "$pass_s";
 exit;
 
 else
+
 show_text 31 "$how_password";
 read -s password < $term ;
+
 if [ ! -e $log_dir ] ; then
 mkdir $log_dir;
-
 else
+
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
 run "$pass_s";
 exit;
+fi
 fi
 fi
 fi
