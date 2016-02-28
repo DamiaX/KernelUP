@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="9.0";
+version="9.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -32,6 +32,7 @@ virtualbox_path='/usr/bin/VirtualBox';
 virtualbox_modules='/etc/init.d/vboxdrv setup';
 actual_dir="$(pwd)";
 temp_dir="$HOME/.kernelup_temp_dir";
+app_install_dir="$HOME/.kernelup_app_install_dir";
 autostart_dir="$HOME/.config/autostart/";
 latest_kernel_installed=$(ls /boot/ | grep img | cut -d "-" -f2 | sort -V | cut -d "." -f1,2,3 | tail -n 1);
 log_dir="$HOME/.KernelUP_data";
@@ -433,13 +434,19 @@ fi
 
 install_app()
 {
+
+mkdir -p $app_install_dir;
+cd $app_install_dir;
+
 chose_auto_lang;
 create_app_data;
+
 wget -q $kernel_up_url -O $app_name_male;
 check_success_install;
 
 rm -rf $app_dir/$app_name_male;
 check_success_install;
+
 cp $app_name_male $app_dir/$app_name_male;
 check_success_install;
 cp $app_name_male*.lang $app_dir
@@ -488,6 +495,8 @@ check_success_install;
 if [ $? -eq 0 ]
     then
 print_text 33 "=> $install_ok";
+cd $HOME;
+rm -rf $app_install_dir;
 echo -e "\E[37;1m=> $run\033[0m" "\E[35;1m$app_name_male\033[0m";
 fi
 }
