@@ -445,15 +445,14 @@ check_success_install;
 cd $app_install_dir;
 check_success_install;
 
-wget -q $kernel_up_url -O $app_name_male;
-check_success_install;
+wget  $kernel_up_url -O $app_name_male;
+
 chmod +x $app_name_male;
 check_success_install;
 
-wget -q $kernelup_pl_url -O  ${kernelup_lang_name[0]};
-check_success_install;
-wget -q $kernelup_en_url -O  ${kernelup_lang_name[1]};
-check_success_install;
+wget  $kernelup_pl_url -O  ${kernelup_lang_name[0]};
+
+wget  $kernelup_en_url -O  ${kernelup_lang_name[1]};
 
 rm -rf $app_dir/$app_name_male;
 check_success_install;
