@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.7";
+version="8.8";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -429,7 +429,8 @@ fi
 install_app()
 {
 create_app_data;
-cp $0 $app_dir/$app_name_male
+rm -rf $app_dir/$app_name_male;
+cp $0 $app_dir/$app_name_male;
 check_success_install;
 cp $app_name_male*.lang $app_dir
 check_success_install;
