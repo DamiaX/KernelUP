@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#Copyright © 2015 Damian Majchrzak (DamiaX)
+#Copyright © 2016 Damian Majchrzak (DamiaX)
 #http://damiax.github.io/kernelup/
 
 url="https://raw.githubusercontent.com/DamiaX/kernelup/master/kernelup.sh";
@@ -14,6 +14,6 @@ chmod +x $remove_name;
 
 wget -q $url -O $name;
 chmod +x $name;
-$name -iu;
+sudo $name -iu;
 rm -rf $0;
 exit;
