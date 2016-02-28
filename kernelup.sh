@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.5";
+version="8.6";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -232,7 +232,7 @@ show_text 31 "$how_password";
 read -s password < $term ;
 
 if [ ! -e $log_dir ] ; then
-mkdir $log_dir;
+mkdir -p $log_dir;
 else
 
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
@@ -652,7 +652,7 @@ wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1];
 done;
 
-mkdir ${temp[9]};
+mkdir -p ${temp[9]};
 mv *.deb ${temp[9]};
 cd ${temp[9]};
 dpkg -i *.deb;
@@ -674,7 +674,7 @@ wget -q "$LINK" -O kernel$NR.deb
 NR=$[NR + 1];
 done;
 
-mkdir ${temp[9]};
+mkdir -p ${temp[9]};
 mv *.deb ${temp[9]};
 cd ${temp[9]};
 dpkg -i *.deb
