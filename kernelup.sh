@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.9";
+version="9.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -445,22 +445,23 @@ check_success_install;
 cd $app_install_dir;
 check_success_install;
 
-wget  $kernel_up_url -O $app_name_male;
-
-chmod +x $app_name_male;
+wget -q $kernel_up_url -O $app;
+check_success_install;
+chmod +x $app;
 check_success_install;
 
-wget  $kernelup_pl_url -O  ${kernelup_lang_name[0]};
-
-wget  $kernelup_en_url -O  ${kernelup_lang_name[1]};
-
-rm -rf $app_dir/$app_name_male;
+wget -q $kernelup_pl_url -O  ${kernelup_lang_name[0]};
+check_success_install;
+wget -q $kernelup_en_url -O  ${kernelup_lang_name[1]};
 check_success_install;
 
-cp $app_name_male $app_dir/$app_name_male;
+rm -rf $app_dir/$app;
 check_success_install;
 
-cp $app_name_male*.lang $app_dir;
+cp $app $app_dir/$app;
+check_success_install;
+
+cp $app*.lang $app_dir;
 check_success_install;
 wget -q $init_url -O ${kernelup_file_name[1]};
 check_success_install;
@@ -508,7 +509,7 @@ if [ $? -eq 0 ]
 print_text 33 "=> $install_ok";
 cd $HOME;
 rm -rf $app_install_dir;
-echo -e "\E[37;1m=> $run\033[0m" "\E[35;1m$app_name_male\033[0m";
+echo -e "\E[37;1m=> $run\033[0m" "\E[35;1m$app\033[0m";
 fi
 }
 
@@ -516,7 +517,7 @@ install_file()
 {
 if [ "$1" = "1" ]
 then
-if [ ! -e $app_dir/$app_name_male ] ; then
+if [ ! -e $app_dir/$app ] ; then
 show_text 31 "=> $install_file";
 read answer < $term;
 default_answer;
@@ -587,7 +588,7 @@ rm -rf ${temp[0]}
 rm -rf ${temp[2]}
 rm -rf ${temp[3]}
 rm -rf ${temp[5]}
-./"${temp[10]}" $0
+./"${temp[10]}" $app;
 exit;
 fi
 }
@@ -1058,7 +1059,7 @@ exit;;
  "--install"|"-i")
    check_security;
    test_connect 0;
-   rm -rf "$app_dir/$app_name_male*";
+   rm -rf "$app_dir/$app*";
    install_file 1;
 exit;;
  "--systemreboot"|"-sr")
