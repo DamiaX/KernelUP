@@ -14,6 +14,6 @@ chmod +x $remove_name;
 
 wget -q $url -O $name;
 chmod +x $name;
-sudo $name -iu;
+sudo "./$name -iu";
 rm -rf $0;
 exit;
