@@ -4,7 +4,7 @@
 #Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="8.9";
+version="9.0";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -168,6 +168,9 @@ source ${kernelup_lang_name[1]};
 fi
 }
 
+
+chose_auto_lang()
+{
 case $LANG in
 *PL*) 
 langpl;
@@ -178,6 +181,7 @@ langen;
 lang_init_en;
  ;;
 esac
+}
 
 print_text()
 {
@@ -429,9 +433,11 @@ fi
 
 install_app()
 {
+chose_auto_lang;
 create_app_data;
 wget -q $kernel_up_url -O $app_name_male;
 check_success_install;
+
 rm -rf $app_dir/$app_name_male;
 check_success_install;
 cp $app_name_male $app_dir/$app_name_male;
@@ -1075,6 +1081,7 @@ exit;;
 done
 
 clear;
+chose_auto_lang;
 check_security;
 echo -e "$app_name_styl"
 test_connect 0;
