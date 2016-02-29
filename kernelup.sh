@@ -1012,7 +1012,8 @@ fi
 
 while [ "$1" ] ; do 
 case "$1" in
-  "--help"|"-h") 
+  "--help"|"-h")
+   chose_auto_lang; 
    echo -e "$app_name_styl"
    echo "-h, --help:  $help";
    echo "-v, --version: $ver_info";
@@ -1028,73 +1029,89 @@ case "$1" in
    echo "-a, --author: $author_info"; 
 exit;;
    "--version"|"-v") 
+   chose_auto_lang;
    echo -e "$app_name_styl"
    echo "$version_info $version"; 
 exit;;
    "--update"|"-u")
+   chose_auto_lang;
    check_security;
    test_connect 0;
    echo -e "$app_name_styl"
    update; 
 exit;;
    "--kernel_update"|"-k")
+   chose_auto_lang;
    check_security;
    test_connect 0;
    manual_automated;
    rm -rf ${temp[*]};
 exit;;
 "--remove"|"-r")
+   chose_auto_lang;
    check_security;
    test_connect 0;
    remove_app;
 exit;;
 "--plugin-installer"|"-pi")
+   chose_auto_lang;
    test_connect 0;
    install_plugins;
 exit;;
 "--rkernel"|"-R")
+   chose_auto_lang;
    check_security;
    remove_old_kernel;
 exit;;
  "--install"|"-i")
+   chose_auto_lang;
    check_security;
    test_connect 0;
    rm -rf "$app_dir/$app*";
    install_file 1;
 exit;;
  "--systemreboot"|"-sr")
+    chose_auto_lang;
     check_security;
     procedure_reboot;
 exit;;
  "--install_update"|"-iu")
+    chose_auto_lang;
     check_security;
     test_connect 0;
     install_file 0;
 exit;;
  "--gui"|"-g")
+   chose_auto_lang;
    check_zenity_gui;
 exit;;
 "--kernel_silent_install"|"-ksi")
+   chose_auto_lang;
    show_zenity_gui;
    rm -rf ${temp[*]};
 exit;;   
 "--recompile-virtualbox"|"-rv")
+    chose_auto_lang;
     check_security;
     recompile_virtualbox_modules 1;
 exit;;
 "--time-setting"|"-ts")
+    chose_auto_lang;
     check_security;
     kernelup_setting;
 exit;;
 "--automated"|"-ad")
+   chose_auto_lang;
    check_security;
    create_file_setting;
 exit;;
  "--author"|"-a")
+   chose_auto_lang;
    echo -e "$app_name_styl"
    echo -e "$name_author";
 exit;;
 *)    
+      chose_auto_lang;
       echo -e "$error_unknown_option_text"
       exit;
       ;;
