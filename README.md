@@ -1,5 +1,5 @@
 About:<blockquote>
-**KernelUP** is a program to automatically update the kernel for **Ubuntu**, **Debian**, **elementary OS** and **Linux Mint**.
+**KernelUP** is a program to automatically update the kernel for **Ubuntu**, **Ubuntu-Mate**, **Debian**, **elementary OS** and **Linux Mint**.
 </blockquote>
 <hr>
 Features:<br>
