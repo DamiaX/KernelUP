@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #Copyright © 2016 Damian Majchrzak (DamiaX)
-#Automatic Ubuntu, Debian, elementary OS and Linux Mint kernel updater.
+#Automatic Ubuntu, Ubuntu-Mate, Debian, elementary OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="9.0";
+version="9.1";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -18,8 +18,12 @@ desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kerne
 kernelup_run_desktop_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup_run.desktop';
 icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png';
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
-crypt_module='https://github.com/DamiaX/Crypt-decrypt/raw/master/crypt';
-decrypt_module='https://github.com/DamiaX/Crypt-decrypt/raw/master/decyprt';
+crypt_module_x64='https://github.com/DamiaX/Crypt-decrypt/raw/master/crypt';
+decrypt_module_x64='https://github.com/DamiaX/Crypt-decrypt/raw/master/decyprt';
+
+crypt_module_x86='https://github.com/DamiaX/Crypt-decrypt/raw/master/crypt_x86';
+decrypt_module_x86='https://github.com/DamiaX/Crypt-decrypt/raw/master/decrypt_x86';
+
 connect_test_url=(google.com facebook.com kernel.org);
 temp=(.kernel.temp .kernel1.temp .kernel2.temp .kernel3.temp .kernel4.temp .url.temp .x64.link .86.link .xall.link .install_katalog up.sh);
 kernelup_file_name=(kernelup.png kernelup-init kernelup.desktop remove.sh kernelup-run kernelup-run.desktop kernelup_pass kernelup_show);
@@ -241,10 +245,6 @@ else
 show_text 31 "$how_password";
 read -s password < $term ;
 
-if [ ! -e $log_dir ] ; then
-mkdir -p $log_dir;
-else
-
 "$app_dir/${kernelup_file_name[6]}" "$password" > "$log_dir/${kernelup_log_name[3]}";
 pass_h=`cat "$log_dir/${kernelup_log_name[3]}"`
 pass_s=`"$app_dir/${kernelup_file_name[7]}" "$pass_h"`;
@@ -253,7 +253,7 @@ exit;
 fi
 fi
 fi
-fi
+
 }
 
 zenity_no_connect()
@@ -474,18 +474,46 @@ check_success_install;
 wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
 check_success_install;
 
-wget -q $crypt_module -O ${kernelup_file_name[6]};
+
+if  [ $arch2 = "i686" ] || [ $arch2 = "i386" ] || [ $arch2 = "x86" ]; then
+
+wget -q $crypt_module_x86 -O ${kernelup_file_name[6]};
 check_success_install;
 chmod +x ${kernelup_file_name[6]};
 check_success_install;
 mv ${kernelup_file_name[6]} $app_dir;
 check_success_install;
-wget -q $decrypt_module -O ${kernelup_file_name[7]};
+
+
+wget -q $decrypt_module_x86 -O ${kernelup_file_name[7]};
 check_success_install;
 chmod +x ${kernelup_file_name[7]};
 check_success_install;
 mv ${kernelup_file_name[7]} $app_dir;
 check_success_install;
+
+fi
+
+if  [ $arch2 = "x86_64" ]; then
+
+wget -q $crypt_module_x64 -O ${kernelup_file_name[6]};
+check_success_install;
+chmod +x ${kernelup_file_name[6]};
+check_success_install;
+mv ${kernelup_file_name[6]} $app_dir;
+check_success_install;
+
+
+wget -q $decrypt_module_x64 -O ${kernelup_file_name[7]};
+check_success_install;
+chmod +x ${kernelup_file_name[7]};
+check_success_install;
+mv ${kernelup_file_name[7]} $app_dir;
+check_success_install;
+
+fi
+
+
 
 chmod +x ${kernelup_file_name[1]};
 check_success_install;
@@ -1119,7 +1147,8 @@ exit;;
 done
 
 clear;
-chose_auto_lang;
+chose_auto_lang; < $term;
+create_app_data < $term;
 check_security;
 echo -e "$app_name_styl"
 test_connect 0;
@@ -1128,8 +1157,8 @@ install_file 1;
 recompile_virtualbox_modules 0;
 remove_old_kernel_init 0;
 reboot_init;
-load_plugins;
+load_plugins; < $term;
 manual_automated;
 rm -rf ${temp[*]};
 rm -rf $temp_dir;
-echo -e "$name_author";
+echo -e "$name_author"
