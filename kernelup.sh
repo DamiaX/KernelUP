@@ -439,17 +439,22 @@ fi
 install_app()
 {
 
+echo data
 mkdir -p $app_install_dir;
 check_success_install;
 
 cd $app_install_dir;
 check_success_install;
 
+echo app
+
 wget -q $kernel_up_url -O $app;
 check_success_install;
 chmod +x $app;
 check_success_install;
 
+
+echo lang
 wget -q $kernelup_pl_url -O  ${kernelup_lang_name[0]};
 check_success_install;
 wget -q $kernelup_en_url -O  ${kernelup_lang_name[1]};
@@ -463,21 +468,30 @@ check_success_install;
 
 cp $app*.lang $app_dir;
 check_success_install;
+
+echo init
+
 wget -q $init_url -O ${kernelup_file_name[1]};
 check_success_install;
+
+echo desktop
 wget -q $desktop_url -O ${kernelup_file_name[2]};
 check_success_install;
 wget -q $kernelup_run_desktop_url -O ${kernelup_file_name[5]}; 
+
+echo icon
 check_success_install;
-wget -q $icon_url -O ${kernelup_file_name[0]};
+wget  $icon_url -O ${kernelup_file_name[0]};
 check_success_install;
+
+echo run 
 wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
 check_success_install;
 
 
 if  [ $arch2 = "i686" ] || [ $arch2 = "i386" ] || [ $arch2 = "x86" ]; then
 
-wget -q $crypt_module_x86 -O ${kernelup_file_name[6]};
+wget $crypt_module_x86 -O ${kernelup_file_name[6]};
 check_success_install;
 chmod +x ${kernelup_file_name[6]};
 check_success_install;
