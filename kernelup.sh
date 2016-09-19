@@ -20,10 +20,8 @@ icon_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/kernelup.png'
 init_url='https://raw.githubusercontent.com/DamiaX/KernelUP/master/Core/kernelup-init';
 crypt_module_x64='https://github.com/DamiaX/Crypt-decrypt/raw/master/crypt';
 decrypt_module_x64='https://github.com/DamiaX/Crypt-decrypt/raw/master/decyprt';
-
 crypt_module_x86='https://github.com/DamiaX/Crypt-decrypt/raw/master/crypt_x86';
 decrypt_module_x86='https://github.com/DamiaX/Crypt-decrypt/raw/master/decrypt_x86';
-
 connect_test_url=(google.com facebook.com kernel.org);
 temp=(.kernel.temp .kernel1.temp .kernel2.temp .kernel3.temp .kernel4.temp .url.temp .x64.link .86.link .xall.link .install_katalog up.sh);
 kernelup_file_name=(kernelup.png kernelup-init kernelup.desktop remove.sh kernelup-run kernelup-run.desktop kernelup_pass kernelup_show);
@@ -462,11 +460,10 @@ wget -q $desktop_url -O ${kernelup_file_name[2]};
 check_success_install;
 wget -q $kernelup_run_desktop_url -O ${kernelup_file_name[5]}; 
 check_success_install;
-wget  $icon_url -O ${kernelup_file_name[0]};
+wget -q  $icon_url -O ${kernelup_file_name[0]};
 check_success_install;
 wget -q $kernelup_run_url -O ${kernelup_file_name[4]};
 check_success_install;
-
 
 if  [ $arch2 = "i686" ] || [ $arch2 = "i386" ] || [ $arch2 = "x86" ]; then
 wget -q $crypt_module_x86 -O ${kernelup_file_name[6]};
