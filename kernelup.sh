@@ -1,10 +1,10 @@
 #!/bin/bash
 
 #Copyright © 2016 Damian Majchrzak (DamiaX)
-#Automatic Ubuntu, Ubuntu-Mate, Debian, elementary OS and Linux Mint kernel updater.
+#Automatic Ubuntu, Ubuntu-Mate, Debian, OS and Linux Mint kernel updater.
 #https://github.com/DamiaX/KernelUP/
 
-version="9.2";
+version="9.3";
 app='kernelup';
 version_url="https://raw.githubusercontent.com/DamiaX/kernelup/master/VERSION";
 ubuntu_url="http://kernel.ubuntu.com/~kernel-ppa/mainline";
@@ -208,7 +208,7 @@ show_text()
 
 check_distro()
 {
-if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" && "$(lsb_release -si)" != "elementary OS" && "$(lsb_release -si)" != "Debian" ]] ; then
+if [[ "$(lsb_release -si)" != "Ubuntu" && "$(lsb_release -si)" != "LinuxMint" && "$(lsb_release -si)" != "elementary OS" && "$(lsb_release -si)" != "elementary" && "$(lsb_release -si)" != "Debian" ]] ; then
    show_text 31 "---[$dist_fail]---" 1>&2
    exit;
 fi
@@ -1127,8 +1127,8 @@ exit;;
 done
 
 clear;
-chose_auto_lang; < $term;
-create_app_data < $term;
+chose_auto_lang;
+create_app_data;
 check_security;
 echo -e "$app_name_styl"
 test_connect 0;
